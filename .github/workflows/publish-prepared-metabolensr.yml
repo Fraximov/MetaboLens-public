@@ -1,0 +1,43 @@
+name: Publish prepared MetaboLensR
+on:
+  workflow_dispatch:
+permissions:
+  # GitHub requires push access to read the temporary draft release asset.
+  contents: write
+  packages: write
+concurrency:
+  group: publish-prepared-metabolensr
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'Fraximov/MetaboLens-public'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ARCHIVE: metabolensr-0.0.0.9003-linux-amd64.tar
+      ARCHIVE_SHA256: 68e0e7866d2eded5479a4933ee80440e6d55b9929618ea13a7eb848f43005321
+      IMAGE_DIGEST: sha256:5608800abc630f5489e5b452741a8ac5e808508bcd0a0e46241a584a6ccc05ec
+      IMAGE: ghcr.io/fraximov/metabolensr:0.0.0.9003-d69ed62f
+    steps:
+      - name: Install registry copy tool
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends skopeo
+      - name: Download and verify the audited image archive
+        working-directory: ${{ runner.temp }}
+        run: |
+          gh release download metabolensr-image-transfer-20261022 --repo Fraximov/MetaboLens-public --pattern "$ARCHIVE"
+          printf '%s  %s\n' "$ARCHIVE_SHA256" "$ARCHIVE" | sha256sum --check --strict
+          skopeo inspect --raw "oci-archive:$ARCHIVE" > image-index.json
+          test "sha256:$(sha256sum image-index.json | cut -d ' ' -f 1)" = "$IMAGE_DIGEST"
+      - name: Publish without rebuilding or changing any digest
+        working-directory: ${{ runner.temp }}
+        run: |
+          printf '%s' "$GH_TOKEN" | skopeo login --authfile "$RUNNER_TEMP/metabolensr-registry-auth.json" --username "$GITHUB_ACTOR" --password-stdin ghcr.io
+          skopeo copy --all --preserve-digests --authfile "$RUNNER_TEMP/metabolensr-registry-auth.json" --digestfile published-digest.txt "oci-archive:$ARCHIVE" "docker://$IMAGE"
+          test "$(cat published-digest.txt)" = "$IMAGE_DIGEST"
+          printf 'Published `%s@%s` from the checksum-verified archive.\n' "${IMAGE%:*}" "$IMAGE_DIGEST" >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove temporary registry authentication
+        if: always()
+        run: rm -f "$RUNNER_TEMP/metabolensr-registry-auth.json"
