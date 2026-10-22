@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "profile": "strict",
+  "source_tool": "msdial",
+  "source_metadata": {
+    "quantitation_type": "height"
+  }
+}

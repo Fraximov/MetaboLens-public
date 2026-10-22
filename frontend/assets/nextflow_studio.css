@@ -1,0 +1,722 @@
+:root {
+  --nf-bg: #f5f7fb;
+  --nf-surface: #ffffff;
+  --nf-text: #15302b;
+  --nf-muted: #5f666d;
+  --nf-border: rgba(112, 115, 114, 0.18);
+  --nf-green: #18974c;
+  --nf-green-dark: #007b53;
+  --nf-green-soft: #e7f7ed;
+  --nf-radius: 8px;
+  --nf-shadow: 0 8px 20px rgba(30, 41, 59, 0.07);
+}
+
+.nf-studio-frame {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  overflow: visible;
+}
+
+.nf-studio-main {
+  min-width: 0;
+  padding: 0;
+}
+
+.nf-page-header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.nf-header-main {
+  align-items: center;
+  display: flex;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.nf-header-mark {
+  display: block;
+  flex: 0 0 auto;
+  height: 46px;
+  width: auto;
+}
+
+.nf-page-title {
+  color: var(--nf-text);
+  font-size: 1.65rem;
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.nf-header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.7rem;
+}
+
+.nf-launch-button,
+.nf-secondary-action,
+.nf-copy-button,
+.nf-action-button {
+  border-radius: var(--nf-radius);
+  font-weight: 600;
+  min-height: 38px;
+}
+
+.nf-launch-button {
+  background: var(--nf-green);
+  border-color: var(--nf-green);
+  padding-inline: 1.15rem;
+}
+
+.nf-status-grid {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-bottom: 1rem;
+}
+
+.nf-status-card {
+  align-items: center;
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  display: flex;
+  gap: 0.75rem;
+  min-height: 96px;
+  padding: 0.9rem;
+}
+
+.nf-status-icon {
+  background: #eef2f6;
+  border: 6px solid #f7f9fb;
+  border-radius: 50%;
+  flex: 0 0 34px;
+  height: 34px;
+  width: 34px;
+}
+
+.nf-status-icon-success {
+  background: var(--nf-green-soft);
+  border-color: #f1fcf6;
+}
+
+.nf-status-icon-profile {
+  background: #efeaff;
+  border-color: #f7f4ff;
+}
+
+.nf-status-icon-container {
+  background: #e9f3ff;
+  border-color: #f4f9ff;
+}
+
+.nf-status-copy {
+  min-width: 0;
+}
+
+.nf-status-label {
+  color: #5f666d;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.nf-status-value {
+  color: var(--nf-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 0.32rem;
+  overflow-wrap: break-word;
+}
+
+.nf-status-value-success {
+  color: var(--nf-green-dark);
+}
+
+.nf-status-helper {
+  color: var(--nf-muted);
+  font-size: 0.78rem;
+  line-height: 1.25;
+  margin-top: 0.28rem;
+}
+
+.nf-panel {
+  background: var(--nf-surface);
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  box-shadow: 0 5px 16px rgba(30, 41, 59, 0.05);
+  margin-bottom: 1rem;
+}
+
+.nf-config-command-row {
+  align-items: stretch;
+}
+
+.nf-config-column,
+.nf-command-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.nf-config-column > .nf-panel,
+.nf-command-column > .nf-panel {
+  width: 100%;
+}
+
+.nf-config-command-row .nf-config-panel,
+.nf-config-command-row .nf-command-panel {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+
+.nf-command-panel {
+  display: flex;
+}
+
+.nf-command-panel .card-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.nf-collapsible {
+  overflow: hidden;
+}
+
+.nf-collapsible summary {
+  list-style: none;
+}
+
+.nf-collapsible summary::-webkit-details-marker {
+  display: none;
+}
+
+.nf-collapsible-summary {
+  cursor: pointer;
+  display: block;
+  padding: 0.95rem 1.1rem;
+}
+
+.nf-collapsible-summary:hover {
+  background: rgba(0, 123, 83, 0.035);
+}
+
+.nf-collapsible-summary-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.nf-collapsible-body {
+  border-top: 1px solid var(--nf-border);
+  padding: 1rem 1.1rem 1.1rem;
+}
+
+.nf-collapsible-action {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.85rem;
+}
+
+.nf-config-panel {
+  overflow: visible;
+}
+
+.nf-config-panel .card-body {
+  overflow: visible;
+  padding: 0;
+}
+
+.nf-step-tabs {
+  border-bottom: 1px solid var(--nf-border);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.nf-step-tabs .nav-item {
+  min-width: 0;
+}
+
+.nf-step-tabs .nav-link {
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: #2f3337;
+  font-size: 0.93rem;
+  font-weight: 700;
+  padding: 1rem 1.1rem;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.nf-step-tabs .nav-link.active {
+  background: #effaf5;
+  border-bottom-color: var(--nf-green);
+  color: var(--nf-green-dark);
+}
+
+.nf-tab-pane {
+  position: relative;
+  z-index: 1;
+  padding: 1.2rem;
+}
+
+.nf-field {
+  margin-bottom: 1rem;
+}
+
+.nf-field-label {
+  color: #2f3337;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 0.42rem;
+}
+
+.nf-field-helper {
+  color: var(--nf-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  margin-top: 0.42rem;
+}
+
+/* Line the button up with the control beside it: the field's own bottom
+   margin would otherwise leave the button 1rem lower. */
+.nf-field-button-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+}
+
+.nf-field-button-col .btn {
+  min-height: 40px;
+}
+
+.nf-field .Select-control,
+.nf-field .form-control {
+  border-color: #ccd8e4;
+  border-radius: var(--nf-radius);
+  min-height: 40px;
+}
+
+.nf-field .Select-menu-outer,
+.nf-field .Select-menu {
+  display: block !important;
+  max-height: 260px;
+  z-index: 3000 !important;
+}
+
+.nf-field .Select-option {
+  white-space: normal;
+}
+
+.nf-inline-status {
+  background: #f8f9fa;
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  color: #2f3337;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  margin-bottom: 0.85rem;
+  padding: 0.65rem 0.75rem;
+}
+
+/* Status lines only appear when they have something to say. */
+.nf-inline-status:empty {
+  display: none;
+}
+
+.nf-mini-card,
+.nf-resume-card {
+  background: #fcfcfb;
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  padding: 0.85rem;
+}
+
+.nf-mini-card-label {
+  color: var(--nf-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.nf-mini-card-copy {
+  color: var(--nf-text);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0.45rem 0 0.6rem;
+}
+
+.nf-json-editor {
+  border: 1px solid #ccd8e4;
+  border-radius: var(--nf-radius);
+  min-height: 150px;
+  padding: 0.75rem;
+  resize: vertical;
+  width: 100%;
+}
+
+.nf-launch-status {
+  margin-bottom: 1rem;
+}
+
+.nf-details {
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  overflow: hidden;
+}
+
+.nf-details-summary {
+  background: #fcfcfb;
+  color: var(--nf-text);
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+  padding: 0.8rem 0.9rem;
+}
+
+.nf-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nf-dag-frame {
+  border: 0;
+  border-top: 1px solid var(--nf-border);
+  border-radius: 0;
+}
+
+.nf-panel-heading {
+  align-items: center;
+  display: flex;
+  gap: 0.8rem;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.nf-panel-title {
+  color: var(--nf-text);
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+
+.nf-materialization-title {
+  margin-bottom: 0.75rem;
+}
+
+.nf-preview-tabs .tab-content {
+  padding-top: 0.85rem;
+}
+
+.nf-template-editor {
+  border: 1px solid #ccd8e4;
+  border-radius: var(--nf-radius);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  min-height: 280px;
+  padding: 0.8rem;
+  resize: vertical;
+  width: 100%;
+}
+
+.nf-template-editor-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.nf-template-editor-status {
+  margin: 0.75rem 0 0;
+}
+
+.nf-terminal {
+  background: #061827;
+  border-radius: var(--nf-radius);
+  color: #dff7ff;
+  flex: 1 1 auto;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  margin: 0;
+  max-height: 340px;
+  min-height: 170px;
+  overflow: auto;
+  padding: 0.8rem 0.9rem;
+  white-space: pre-wrap;
+}
+
+.nf-token-comment {
+  color: #7f95aa;
+}
+
+.nf-token-command {
+  color: #7dd3fc;
+  font-weight: 700;
+}
+
+.nf-token-subcommand {
+  color: #a7f3d0;
+  font-weight: 700;
+}
+
+.nf-token-option {
+  color: #86efac;
+}
+
+.nf-token-path {
+  color: #fde68a;
+}
+
+.nf-token-placeholder {
+  color: #f0abfc;
+}
+
+.nf-token-value {
+  color: #fbbf24;
+}
+
+.nf-token-continuation {
+  color: #64748b;
+}
+
+.nf-token-text {
+  color: #dff7ff;
+}
+
+.nf-validation-alert {
+  border-radius: var(--nf-radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.nf-command-column .nf-validation-alert {
+  margin-top: 1rem;
+}
+
+.nf-overview-dag-frame {
+  background: #ffffff;
+  border: 1px solid var(--nf-border);
+  border-radius: var(--nf-radius);
+  max-height: 470px;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.nf-overview-dag-image {
+  display: block;
+  height: auto;
+  /* Fits the frame: the route maps are 1630x354 and stay legible scaled
+     down. Narrow screens scroll instead (see the media query below). */
+  width: 100%;
+}
+
+.nf-overview-dag-source {
+  color: var(--nf-muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  margin-top: 0.75rem;
+}
+
+.nf-recent-table-wrap {
+  overflow-x: auto;
+}
+
+.nf-recent-pagination {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  margin-bottom: 0.65rem;
+}
+
+.nf-recent-pagination-status {
+  color: var(--nf-muted);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.nf-recent-pagination-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nf-recent-pagination-button {
+  align-items: center;
+  display: inline-flex;
+  font-size: 1.05rem;
+  height: 28px;
+  justify-content: center;
+  line-height: 1;
+  min-height: 28px;
+  padding: 0;
+  width: 30px;
+}
+
+.nf-recent-table {
+  color: var(--nf-text);
+  font-size: 0.9rem;
+  min-width: 920px;
+}
+
+.nf-recent-table thead th {
+  border-bottom: 1px solid var(--nf-border);
+  color: #5f666d;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.7rem 0.8rem;
+}
+
+.nf-recent-table tbody td {
+  border-bottom: 1px solid #edf1f4;
+  padding: 0.62rem 0.8rem;
+  vertical-align: middle;
+}
+
+.nf-run-status {
+  --nf-run-status-bg: #f7f9fb;
+  --nf-run-status-border: #dfe5eb;
+  --nf-run-status-color: #4f565d;
+  align-items: center;
+  background: var(--nf-run-status-bg);
+  border: 1px solid var(--nf-run-status-border);
+  border-radius: 999px;
+  color: var(--nf-run-status-color);
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 700;
+  gap: 0.34rem;
+  line-height: 1;
+  padding: 0.24rem 0.48rem;
+  white-space: nowrap;
+}
+
+.nf-run-status::before {
+  background: var(--nf-run-status-color);
+  border-radius: 999px;
+  content: "";
+  flex: 0 0 0.38rem;
+  height: 0.38rem;
+  width: 0.38rem;
+}
+
+.nf-run-status-succeeded,
+.nf-run-status-completed,
+.nf-run-status-approved {
+  --nf-run-status-bg: #eef9f2;
+  --nf-run-status-border: #cbead6;
+  --nf-run-status-color: #007b53;
+}
+
+.nf-run-status-running,
+.nf-run-status-processing {
+  --nf-run-status-bg: #eef5ff;
+  --nf-run-status-border: #c9ddf7;
+  --nf-run-status-color: #193f90;
+}
+
+.nf-run-status-queued,
+.nf-run-status-preparing,
+.nf-run-status-submitted,
+.nf-run-status-draft {
+  --nf-run-status-bg: #f7f9fb;
+  --nf-run-status-border: #dfe5eb;
+  --nf-run-status-color: #5f666d;
+}
+
+.nf-run-status-failed {
+  --nf-run-status-bg: #fff2f3;
+  --nf-run-status-border: #f0cbd0;
+  --nf-run-status-color: #9f3f4c;
+}
+
+.nf-task-cell {
+  align-items: center;
+  display: flex;
+  gap: 0.65rem;
+  min-width: 150px;
+}
+
+.nf-task-progress {
+  background: #e5ebf2;
+  border-radius: 999px;
+  flex: 0 0 72px;
+  height: 7px;
+  overflow: hidden;
+}
+
+.nf-task-progress-fill {
+  background: var(--nf-green);
+  height: 100%;
+}
+
+.nf-task-count {
+  color: #5f666d;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.nf-action-button {
+  min-height: 30px;
+}
+
+.nf-run-actions {
+  align-items: center;
+  display: flex;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.nf-outputs-panel,
+.nf-eic-panel {
+  margin-top: 1rem;
+}
+
+@media (max-width: 1199.98px) {
+  .nf-status-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  .nf-studio-main {
+    padding: 1rem;
+  }
+
+  .nf-page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .nf-header-actions {
+    width: 100%;
+  }
+
+  .nf-header-actions .btn {
+    flex: 1 1 0;
+  }
+
+  .nf-status-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nf-step-tabs .nav-link {
+    padding: 0.85rem 0.7rem;
+  }
+
+  .nf-overview-dag-image {
+    min-width: 1040px;
+  }
+}

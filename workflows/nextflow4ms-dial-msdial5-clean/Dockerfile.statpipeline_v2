@@ -1,0 +1,37 @@
+FROM debian:bookworm-slim
+
+LABEL org.opencontainers.image.title="MetaboLens StatPipeline v2"
+LABEL org.opencontainers.image.description="Standalone R runtime for the modular StatPipeline v2 Nextflow processes."
+
+RUN apt-get update -qq \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        gfortran \
+        libcurl4-openssl-dev \
+        libssl-dev \
+        libxml2-dev \
+        procps \
+        r-base \
+        r-base-dev \
+        r-cran-dplyr \
+        r-cran-dorng \
+        r-cran-foreach \
+        r-cran-ggfortify \
+        r-cran-ggplot2 \
+        r-cran-iterators \
+        r-cran-jsonlite \
+        r-cran-patchwork \
+        r-cran-pheatmap \
+        r-cran-proc \
+        r-cran-purrr \
+        r-cran-pwr \
+        r-cran-randomforest \
+        r-cran-rcolorbrewer \
+        r-cran-readr \
+        r-cran-scales \
+        r-cran-stringr \
+        r-cran-tibble \
+        r-cran-tidyr \
+    && Rscript -e "install.packages(c('missForest', 'writexl'), repos = 'https://cloud.r-project.org')" \
+    && rm -rf /var/lib/apt/lists/* /tmp/downloaded_packages

@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">MS-DIAL 5 plus modular StatPipeline v2 QC-only DAG</title>
+  <desc id="desc">Static workflow diagram showing the MS-DIAL 5 Nextflow graph with the modular StatPipeline v2 QC-only path.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#545555" />
+    </marker>
+    <style>
+      .canvas { fill: #fcfcfb; }
+      .title { fill: #15302b; font-family: Arial, sans-serif; font-size: 24px; font-weight: 700; }
+      .subtitle { fill: #5f666d; font-family: Arial, sans-serif; font-size: 14px; }
+      .node { fill: #ffffff; stroke: #007b53; stroke-width: 2; }
+      .process { fill: #b6ece2; stroke: #065647; }
+      .module { fill: #eef7f4; stroke: #007b53; }
+      .output { fill: #f8f9fa; stroke: #707372; }
+      .muted { fill: #f8f9fa; stroke: #9aa0a6; stroke-dasharray: 6 5; }
+      .label { fill: #160f26; font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; text-anchor: middle; }
+      .small { fill: #2f3337; font-family: Arial, sans-serif; font-size: 11px; text-anchor: middle; }
+      .edge { stroke: #545555; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .edge-label { fill: #5f666d; font-family: Arial, sans-serif; font-size: 12px; text-anchor: middle; }
+      .group-title { fill: #007b53; font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect class="canvas" x="0" y="0" width="1280" height="640" rx="12" />
+  <text class="title" x="40" y="46">MS-DIAL 5 Nextflow DAG</text>
+  <text class="subtitle" x="40" y="70">Modular StatPipeline v2 - QC-only mode.</text>
+
+  <text class="group-title" x="130" y="114">Run contract inputs</text>
+  <rect class="node" x="40" y="132" width="180" height="52" rx="8" />
+  <text class="label" x="130" y="154">input_dir</text>
+  <text class="small" x="130" y="172">RAW, mzML, or ABF</text>
+
+  <rect class="node" x="40" y="206" width="180" height="52" rx="8" />
+  <text class="label" x="130" y="228">msdial_config</text>
+  <text class="small" x="130" y="246">worker settings</text>
+
+  <rect class="node" x="40" y="280" width="180" height="52" rx="8" />
+  <text class="label" x="130" y="302">MS1 library</text>
+  <text class="small" x="130" y="320">text library</text>
+
+  <rect class="node" x="40" y="354" width="180" height="52" rx="8" />
+  <text class="label" x="130" y="376">MS2 library</text>
+  <text class="small" x="130" y="394">MSP library</text>
+
+  <rect class="node" x="40" y="456" width="180" height="52" rx="8" />
+  <text class="label" x="130" y="478">samplesheet</text>
+  <text class="small" x="130" y="496">sample metadata</text>
+
+  <text class="group-title" x="585" y="114">MS-DIAL core</text>
+  <rect class="node process" x="285" y="135" width="190" height="66" rx="10" />
+  <text class="label" x="380" y="162">prepare_msdial5_input</text>
+  <text class="small" x="380" y="181">convert RAW, stage files</text>
+
+  <rect class="node process" x="535" y="135" width="190" height="66" rx="10" />
+  <text class="label" x="630" y="162">peak_detection_msdial5</text>
+  <text class="small" x="630" y="181">run MSDIALCUI</text>
+
+  <rect class="node process" x="780" y="135" width="190" height="66" rx="10" />
+  <text class="label" x="875" y="162">adapt_mdalign_to_stats</text>
+  <text class="small" x="875" y="181">build stats input</text>
+
+  <rect class="node output" x="1035" y="118" width="205" height="62" rx="8" />
+  <text class="label" x="1137" y="143">MS-DIAL outputs</text>
+  <text class="small" x="1137" y="162">mdalign, spectra, EIC.aef</text>
+
+  <rect class="node output" x="1035" y="205" width="205" height="58" rx="8" />
+  <text class="label" x="1137" y="229">MS-DIAL log</text>
+  <text class="small" x="1137" y="247">stdout and diagnostics</text>
+
+  <text class="group-title" x="650" y="330">Modular StatPipeline v2</text>
+  <rect class="node module" x="280" y="360" width="165" height="58" rx="8" />
+  <text class="label" x="362" y="384">R_PARSE_MSDIAL</text>
+  <text class="small" x="362" y="402">raw feature tables</text>
+
+  <rect class="node module" x="500" y="360" width="165" height="58" rx="8" />
+  <text class="label" x="582" y="384">R_PREPROCESS</text>
+  <text class="small" x="582" y="402">filter and impute</text>
+
+  <rect class="node module" x="720" y="360" width="165" height="58" rx="8" />
+  <text class="label" x="802" y="384">R_NORMALIZE</text>
+  <text class="small" x="802" y="402">normalized matrix</text>
+
+  <rect class="node module" x="940" y="360" width="165" height="58" rx="8" />
+  <text class="label" x="1022" y="384">R_QC_REPORT</text>
+  <text class="small" x="1022" y="402">QC plots and tables</text>
+
+  <rect class="node process" x="1080" y="470" width="160" height="58" rx="8" />
+  <text class="label" x="1160" y="494">R_FINAL_REPORT</text>
+  <text class="small" x="1160" y="512">QC provenance</text>
+
+  <rect class="node output" x="1080" y="555" width="160" height="58" rx="8" />
+  <text class="label" x="1160" y="579">Published stats</text>
+  <text class="small" x="1160" y="597">QC JSON, TSV, PDF</text>
+
+  <rect class="node muted" x="940" y="470" width="120" height="58" rx="8" />
+  <text class="small" x="1000" y="494">statistics and</text>
+  <text class="small" x="1000" y="512">lipid branches skipped</text>
+
+  <path class="edge" d="M220,158 C245,158 255,166 285,168" />
+  <path class="edge" d="M220,232 C250,232 260,184 285,174" />
+  <path class="edge" d="M475,168 L535,168" />
+  <path class="edge" d="M220,306 C415,306 440,176 535,174" />
+  <path class="edge" d="M220,380 C405,380 438,187 535,180" />
+  <path class="edge" d="M725,168 L780,168" />
+  <path class="edge" d="M970,153 C1000,148 1008,148 1035,149" />
+  <path class="edge" d="M725,185 C865,222 955,237 1035,236" />
+  <path class="edge" d="M875,201 C875,270 455,290 362,360" />
+  <path class="edge" d="M220,482 C260,482 260,397 280,392" />
+  <path class="edge" d="M445,389 L500,389" />
+  <path class="edge" d="M665,389 L720,389" />
+  <path class="edge" d="M885,389 L940,389" />
+  <path class="edge" d="M1022,418 C1035,454 1080,474 1080,493" />
+  <path class="edge" d="M1160,528 C1160,540 1160,545 1160,555" />
+
+  <text class="edge-label" x="505" y="155">staged data</text>
+  <text class="edge-label" x="800" y="276">adapted alignment table</text>
+  <text class="edge-label" x="938" y="382">QC path only</text>
+</svg>

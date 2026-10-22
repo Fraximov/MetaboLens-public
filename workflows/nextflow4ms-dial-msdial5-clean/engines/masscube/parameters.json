@@ -1,0 +1,160 @@
+{
+  "type": "object",
+  "properties": {
+    "ms2_library_path": {
+      "type": "string"
+    },
+    "workflow_stage": {
+      "type": "string",
+      "enum": [
+        "full",
+        "qc_preview"
+      ],
+      "default": "full"
+    },
+    "analysis_mode": {
+      "type": "string",
+      "enum": [
+        "qc_only"
+      ],
+      "default": "qc_only"
+    },
+    "masscube_parameters": {
+      "type": "object",
+      "properties": {
+        "mz_tol_ms1": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "mz_tol_ms2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "mz_tol_alignment": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "rt_tol_alignment": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "gap_filling_rt_window": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "rt_tol_annotation": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "ms1_abs_int_tol": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ms2_abs_int_tol": {
+          "type": "number",
+          "minimum": 0
+        },
+        "noise_tol": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ms2_rel_int_tol": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "detection_rate_cutoff": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "gaussian_similarity_tol": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "ms2_sim_tol": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "feature_gap_tol": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scan_number_cutoff": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fuzzy_search": {
+          "type": "boolean"
+        },
+        "consider_rt": {
+          "type": "boolean"
+        },
+        "rt_lower_limit": {
+          "type": "number",
+          "minimum": 0
+        },
+        "rt_upper_limit": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mz_lower_limit": {
+          "type": "number",
+          "minimum": 0
+        },
+        "mz_upper_limit": {
+          "type": "number",
+          "minimum": 0
+        },
+        "quant_method": {
+          "type": "string",
+          "const": "peak_height"
+        },
+        "merge_features": {
+          "type": "boolean",
+          "const": false
+        },
+        "correct_rt": {
+          "type": "boolean",
+          "const": false
+        },
+        "group_features_after_alignment": {
+          "type": "boolean",
+          "const": false
+        },
+        "group_features_single_file": {
+          "type": "boolean",
+          "const": false
+        },
+        "sample_normalization": {
+          "type": "boolean",
+          "const": false
+        },
+        "signal_normalization": {
+          "type": "boolean",
+          "const": false
+        },
+        "run_statistics": {
+          "type": "boolean",
+          "const": false
+        },
+        "fill_gaps": {
+          "type": "boolean",
+          "const": true
+        },
+        "gap_filling_method": {
+          "type": "string",
+          "const": "local_maximum"
+        }
+      },
+      "additionalProperties": false,
+      "default": {}
+    },
+    "masscube_config_path": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

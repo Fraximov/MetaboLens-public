@@ -1,0 +1,6 @@
+[package]
+name = "msdial-aef-reader"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]

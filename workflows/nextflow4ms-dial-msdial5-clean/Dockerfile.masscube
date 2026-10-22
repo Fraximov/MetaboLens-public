@@ -1,0 +1,7 @@
+FROM python:3.12.14-slim-bookworm
+
+RUN apt-get update && apt-get install -y --no-install-recommends procps \
+    && rm -rf /var/lib/apt/lists/*
+COPY masscube-requirements.txt /tmp/masscube-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/masscube-requirements.txt && pip check
+CMD ["python3"]

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="1630" height="354" viewBox="0 0 1630 354">
+<defs>
+</defs>
+<metadata id="diagram-manifest" data-schema-version="1.0"><![CDATA[{"groups":[{"color":"#007B53","id":"main","label":"MetaboLensR road"},{"color":"#707372","id":"review","label":"Optional review pause"},{"color":"#7A4EAB","id":"sirius","label":"Optional SIRIUS"}],"height":354,"match":{"flags":"i","target":"fqProcessName","type":"regex"},"nodes":[{"groups":["main"],"h":12.0,"id":"raw_inputs","label":"raw_inputs","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":120.0},{"groups":["main"],"h":12.0,"id":"template_inputs","label":"template_inputs","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":190.0},{"groups":["main"],"h":22.0,"id":"support_files","label":"MS-DIAL libraries","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":80.0,"y":330.0},{"groups":["main"],"h":22.0,"id":"materialize","label":"Materialize run","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":239.5,"y":190.0},{"groups":["main","review"],"h":22.0,"id":"prepare","label":"Prep RAW","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":331.5,"y":192.0},{"groups":["review"],"h":22.0,"id":"is_qc","label":"IS-QC check","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":478.7,"y":260.0},{"groups":["review"],"h":22.0,"id":"is_qc_decision","label":"Pause and decide","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":570.7,"y":260.0},{"groups":["main","review","sirius"],"h":22.0,"id":"engine","label":"MS-DIAL 5","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":717.9,"y":192.0},{"groups":["main","sirius"],"h":22.0,"id":"native_outputs","label":"MS-DIAL outputs","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":809.9,"y":192.0},{"groups":["sirius"],"h":22.0,"id":"annotation","label":"SIRIUS annotation","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":969.4,"y":260.0},{"groups":["sirius"],"h":12.0,"id":"sirius_annotations_out","label":"sirius_annotations_out","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":1061.4,"y":260.0},{"groups":["main"],"h":22.0,"id":"import","label":"Import table","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":969.4,"y":190.0},{"groups":["main","review"],"h":22.0,"id":"qc_preview","label":"MetaboLensR preview","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":1061.4,"y":192.0},{"groups":["review"],"h":22.0,"id":"review_features","label":"Review features","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":1238.9,"y":260.0},{"groups":["review"],"h":22.0,"id":"review_decision","label":"Freeze decisions","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":1330.9,"y":260.0},{"groups":["main","review"],"h":22.0,"id":"finalize","label":"Finalize","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":1478.1,"y":192.0},{"groups":["main"],"h":12.0,"id":"final_out","label":"final_out","patterns":[],"r":6.0,"rx":6.0,"w":12.0,"x":1570.1,"y":190.0}],"regions":[],"title":"","version":"1.0","width":1630}]]></metadata>
+<style>.nf-metro-title { fill: var(--nfm-map-title-color, #111111); }
+.nf-metro-station-label { fill: var(--nfm-map-label-color, #333333); }
+.nf-metro-section-box { fill: var(--nfm-map-section-fill, #ededed); stroke: var(--nfm-map-section-stroke, #e6e6e6); }
+.nf-metro-section-label { fill: var(--nfm-map-section-label-color, #666666); }
+.nf-metro-group-label { fill: var(--nfm-map-section-label-color, #666666); }
+.nf-metro-group-underline { stroke: var(--nfm-map-section-label-color, #666666); }
+.nf-metro-legend-bg { fill: var(--nfm-map-legend-bg, rgba(255, 255, 255, 0.8)); }
+.nf-metro-legend-text { fill: var(--nfm-map-legend-text-color, #333333); }
+.nf-metro-marker-stroke { stroke: var(--nfm-map-marker-stroke, #333333); }
+.nf-metro-label-halo { fill: var(--nfm-map-bg, #ffffff); stroke: var(--nfm-map-bg, #ffffff); }</style>
+<style>@media (prefers-color-scheme: dark) {
+    .nf-metro-section-label { fill: #d0d0d0; }
+    .nf-metro-section-num-circle { fill: #777777; }
+    .nf-metro-title { fill: #ffffff; }
+}
+</style>
+<path d="M717.9,190.0 L809.9,194.0" stroke="#7A4EAB" stroke-width="3.0" stroke-linecap="round" class="metro-line-sirius" data-line-id="sirius" />
+<path d="M809.9,194.0 L867.4,194.0 Q877.4,194.0,881.5380294430119,203.10366477462605 L903.2619705569881,250.89633522537395 Q907.4,260.0,917.4,260.0 L969.4,260.0" stroke="#7A4EAB" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-sirius" data-line-id="sirius" />
+<path d="M969.4,260.0 L1061.4,260.0" stroke="#7A4EAB" stroke-width="3.0" stroke-linecap="round" class="metro-line-sirius" data-line-id="sirius" />
+<path d="M331.5,194.0 L357.5,194.0 Q367.5,194.0,371.6380294430118,203.10366477462605 L393.3619705569882,250.89633522537395 Q397.5,260.0,407.5,260.0 L478.7,260.0" stroke="#707372" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-review" data-line-id="review" />
+<path d="M478.7,260.0 L570.7,260.0" stroke="#707372" stroke-width="3.0" stroke-linecap="round" class="metro-line-review" data-line-id="review" />
+<path d="M570.7,260.0 L637.4,260.0 Q647.4,260.0,651.5380294430119,250.89633522537395 L673.2619705569881,203.10366477462605 Q677.4,194.0,687.4,194.0 L717.9,194.0" stroke="#707372" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-review" data-line-id="review" />
+<path d="M1061.4,194.0 L1136.9,194.0 Q1146.9,194.0,1151.038029443012,203.10366477462605 L1172.7619705569882,250.89633522537395 Q1176.9,260.0,1186.9,260.0 L1238.9,260.0" stroke="#707372" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-review" data-line-id="review" />
+<path d="M1238.9,260.0 L1330.9,260.0" stroke="#707372" stroke-width="3.0" stroke-linecap="round" class="metro-line-review" data-line-id="review" />
+<path d="M1330.9,260.0 L1402.1,260.0 Q1412.1,260.0,1416.2380294430118,250.89633522537395 L1437.961970556988,203.10366477462605 Q1442.1,194.0,1452.1,194.0 L1478.1,194.0" stroke="#707372" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-review" data-line-id="review" />
+<path d="M80.0,120.0 L132.0,120.0 Q142.0,120.0,145.93919298579166,129.19145030018058 L168.06080701420834,180.80854969981942 Q172.0,190.0,182.0,190.0 L239.5,190.0" stroke="#007B53" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-main" data-line-id="main" />
+<path d="M80.0,190.0 L239.5,190.0" stroke="#007B53" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
+<path d="M80.0,330.0 L132.0,330.0 Q142.0,330.0,144.09529088730872,320.2219758592259 L169.90470911269128,199.7780241407741 Q172.0,190.0,182.0,190.0 L239.5,190.0" stroke="#007B53" stroke-width="3.0" fill="none" stroke-linecap="round" stroke-linejoin="round" class="metro-line-main" data-line-id="main" />
+<path d="M239.5,190.0 L331.5,190.0" stroke="#007B53" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
+<path d="M331.5,190.0 L717.9,190.0" stroke="#007B53" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
+<path d="M717.9,190.0 L809.9,190.0" stroke="#007B53" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
+<path d="M809.9,190.0 L969.4,190.0" stroke="#007B53" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
+<path d="M969.4,190.0 L1061.4,190.0" stroke="#007B53" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
+<path d="M1061.4,190.0 L1478.1,190.0" stroke="#007B53" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
+<path d="M1478.1,190.0 L1570.1,190.0" stroke="#007B53" stroke-width="3.0" stroke-linecap="round" class="metro-line-main" data-line-id="main" />
+<g class="nf-metro-station-group" data-node-id="raw_inputs" data-node-cx="80.0" data-node-cy="120.0" data-node-r="6.0" data-node-groups="main" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="74.0" y="114.0" width="12.0" height="12.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="raw_inputs" data-station-lines="main" data-station-label="raw_inputs" />
+<g data-station-id="raw_inputs">
+<path d="M42.0,104.0 L60.0,104.0 L68.0,112.0 L68.0,134.0 Q68.0,136.0,66.0,136.0 L42.0,136.0 Q40.0,136.0,40.0,134.0 L40.0,106.0 Q40.0,104.0,42.0,104.0 Z" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-linejoin="round" />
+<path d="M60.0,104.0 L60.0,112.0 L68.0,112.0 Z" fill="#333333" opacity="0.15" stroke="none" />
+<path d="M60.0,104.0 L60.0,112.0 L68.0,112.0" fill="none" stroke="#333333" stroke-width="0.8999999999999999" />
+<text x="54.0" y="121.2" font-size="7.5" fill="#000000" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dy="0.3em">RAW</text>
+</g>
+</g>
+<g class="nf-metro-station-group" data-node-id="template_inputs" data-node-cx="80.0" data-node-cy="190.0" data-node-r="6.0" data-node-groups="main" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="74.0" y="184.0" width="12.0" height="12.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="template_inputs" data-station-lines="main" data-station-label="template_inputs" />
+<g data-station-id="template_inputs">
+<path d="M42.0,174.0 L60.0,174.0 L68.0,182.0 L68.0,204.0 Q68.0,206.0,66.0,206.0 L42.0,206.0 Q40.0,206.0,40.0,204.0 L40.0,176.0 Q40.0,174.0,42.0,174.0 Z" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-linejoin="round" />
+<path d="M60.0,174.0 L60.0,182.0 L68.0,182.0 Z" fill="#333333" opacity="0.15" stroke="none" />
+<path d="M60.0,174.0 L60.0,182.0 L68.0,182.0" fill="none" stroke="#333333" stroke-width="0.8999999999999999" />
+<text x="54.0" y="191.2" font-size="4.791666666666667" fill="#000000" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dy="0.3em">Template</text>
+</g>
+</g>
+<g class="nf-metro-station-group" data-node-id="support_files" data-node-cx="80.0" data-node-cy="330.0" data-node-r="6.0" data-node-groups="main" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="74.0" y="319.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="support_files" data-station-lines="main" data-station-label="MS-DIAL libraries" />
+</g>
+<g class="nf-metro-station-group" data-node-id="materialize" data-node-cx="239.5" data-node-cy="190.0" data-node-r="6.0" data-node-groups="main" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="233.5" y="179.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="materialize" data-station-lines="main" data-station-label="Materialize run" />
+</g>
+<g class="nf-metro-station-group" data-node-id="prepare" data-node-cx="331.5" data-node-cy="192.0" data-node-r="6.0" data-node-groups="main,review" data-node-w="12.0" data-node-h="16.0" data-node-rx="6.0">
+<rect x="325.5" y="181.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="prepare" data-station-lines="main,review" data-station-label="Prep RAW" />
+</g>
+<g class="nf-metro-station-group" data-node-id="is_qc" data-node-cx="478.7" data-node-cy="260.0" data-node-r="6.0" data-node-groups="review" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="472.7" y="249.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="is_qc" data-station-lines="review" data-station-label="IS-QC check" />
+</g>
+<g class="nf-metro-station-group" data-node-id="is_qc_decision" data-node-cx="570.7" data-node-cy="260.0" data-node-r="6.0" data-node-groups="review" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="564.7" y="249.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="is_qc_decision" data-station-lines="review" data-station-label="Pause and decide" />
+</g>
+<g class="nf-metro-station-group" data-node-id="engine" data-node-cx="717.9" data-node-cy="192.0" data-node-r="6.0" data-node-groups="main,review,sirius" data-node-w="12.0" data-node-h="16.0" data-node-rx="6.0">
+<rect x="711.9" y="181.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="engine" data-station-lines="main,review,sirius" data-station-label="MS-DIAL 5" />
+</g>
+<g class="nf-metro-station-group" data-node-id="native_outputs" data-node-cx="809.9" data-node-cy="192.0" data-node-r="6.0" data-node-groups="main,sirius" data-node-w="12.0" data-node-h="16.0" data-node-rx="6.0">
+<rect x="803.9" y="181.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="native_outputs" data-station-lines="main,sirius" data-station-label="MS-DIAL outputs" />
+</g>
+<g class="nf-metro-station-group" data-node-id="annotation" data-node-cx="969.4" data-node-cy="260.0" data-node-r="6.0" data-node-groups="sirius" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="963.4" y="249.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="annotation" data-station-lines="sirius" data-station-label="SIRIUS annotation" />
+</g>
+<g class="nf-metro-station-group" data-node-id="sirius_annotations_out" data-node-cx="1061.4" data-node-cy="260.0" data-node-r="6.0" data-node-groups="sirius" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="1055.4" y="254.0" width="12.0" height="12.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="sirius_annotations_out" data-station-lines="sirius" data-station-label="sirius_annotations_out" />
+<g data-station-id="sirius_annotations_out">
+<path d="M1075.4,244.0 L1093.4,244.0 L1101.4,252.0 L1101.4,274.0 Q1101.4,276.0,1099.4,276.0 L1075.4,276.0 Q1073.4,276.0,1073.4,274.0 L1073.4,246.0 Q1073.4,244.0,1075.4,244.0 Z" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-linejoin="round" />
+<path d="M1093.4,244.0 L1093.4,252.0 L1101.4,252.0 Z" fill="#333333" opacity="0.15" stroke="none" />
+<path d="M1093.4,244.0 L1093.4,252.0 L1101.4,252.0" fill="none" stroke="#333333" stroke-width="0.8999999999999999" />
+<text x="1087.4" y="261.2" font-size="6.388888888888889" fill="#000000" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dy="0.3em">SIRIUS</text>
+</g>
+</g>
+<g class="nf-metro-station-group" data-node-id="import" data-node-cx="969.4" data-node-cy="190.0" data-node-r="6.0" data-node-groups="main" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="963.4" y="179.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="import" data-station-lines="main" data-station-label="Import table" />
+</g>
+<g class="nf-metro-station-group" data-node-id="qc_preview" data-node-cx="1061.4" data-node-cy="192.0" data-node-r="6.0" data-node-groups="main,review" data-node-w="12.0" data-node-h="16.0" data-node-rx="6.0">
+<rect x="1055.4" y="181.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="qc_preview" data-station-lines="main,review" data-station-label="MetaboLensR preview" />
+</g>
+<g class="nf-metro-station-group" data-node-id="review_features" data-node-cx="1238.9" data-node-cy="260.0" data-node-r="6.0" data-node-groups="review" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="1232.9" y="249.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="review_features" data-station-lines="review" data-station-label="Review features" />
+</g>
+<g class="nf-metro-station-group" data-node-id="review_decision" data-node-cx="1330.9" data-node-cy="260.0" data-node-r="6.0" data-node-groups="review" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="1324.9" y="249.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="review_decision" data-station-lines="review" data-station-label="Freeze decisions" />
+</g>
+<g class="nf-metro-station-group" data-node-id="finalize" data-node-cx="1478.1" data-node-cy="192.0" data-node-r="6.0" data-node-groups="main,review" data-node-w="12.0" data-node-h="16.0" data-node-rx="6.0">
+<rect x="1472.1" y="181.0" width="12.0" height="22.0" rx="6.0" ry="6.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="finalize" data-station-lines="main,review" data-station-label="Finalize" />
+</g>
+<g class="nf-metro-station-group" data-node-id="final_out" data-node-cx="1570.1" data-node-cy="190.0" data-node-r="6.0" data-node-groups="main" data-node-w="12.0" data-node-h="12.0" data-node-rx="6.0">
+<rect x="1564.1" y="184.0" width="12.0" height="12.0" fill="#ffffff" stroke="#333333" stroke-width="2.0" class="nf-metro-station" data-station-id="final_out" data-station-lines="main" data-station-label="final_out" />
+<g data-station-id="final_out">
+<path d="M1584.1,174.0 L1602.1,174.0 L1610.1,182.0 L1610.1,204.0 Q1610.1,206.0,1608.1,206.0 L1584.1,206.0 Q1582.1,206.0,1582.1,204.0 L1582.1,176.0 Q1582.1,174.0,1584.1,174.0 Z" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-linejoin="round" />
+<path d="M1602.1,174.0 L1602.1,182.0 L1610.1,182.0 Z" fill="#333333" opacity="0.15" stroke="none" />
+<path d="M1602.1,174.0 L1602.1,182.0 L1610.1,182.0" fill="none" stroke="#333333" stroke-width="0.8999999999999999" />
+<text x="1596.1" y="191.2" font-size="7.5" fill="#000000" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dy="0.3em">Final</text>
+</g>
+</g>
+<text x="80.0" y="341.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">MS-DIAL libraries</text>
+<text x="80.0" y="341.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="support_files" class="nf-metro-station-label">MS-DIAL libraries</text>
+<text x="239.5" y="176.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">Materialize run</text>
+<text x="239.5" y="176.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="materialize" class="nf-metro-station-label">Materialize run</text>
+<text x="331.5" y="205.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Prep RAW</text>
+<text x="331.5" y="205.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="prepare" class="nf-metro-station-label">Prep RAW</text>
+<text x="478.7" y="246.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">IS-QC check</text>
+<text x="478.7" y="246.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="is_qc" class="nf-metro-station-label">IS-QC check</text>
+<text x="570.7" y="271.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Pause and decide</text>
+<text x="570.7" y="271.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="is_qc_decision" class="nf-metro-station-label">Pause and decide</text>
+<text x="717.9" y="176.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">MS-DIAL 5</text>
+<text x="717.9" y="176.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="engine" class="nf-metro-station-label">MS-DIAL 5</text>
+<text x="809.9" y="205.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">MS-DIAL outputs</text>
+<text x="809.9" y="205.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="native_outputs" class="nf-metro-station-label">MS-DIAL outputs</text>
+<text x="969.4" y="176.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">Import table</text>
+<text x="969.4" y="176.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="import" class="nf-metro-station-label">Import table</text>
+<text x="969.4" y="274.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">SIRIUS annotation</text>
+<text x="969.4" y="274.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="annotation" class="nf-metro-station-label">SIRIUS annotation</text>
+<text x="1061.4" y="205.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">MetaboLensR preview</text>
+<text x="1061.4" y="205.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="qc_preview" class="nf-metro-station-label">MetaboLensR preview</text>
+<text x="1238.9" y="246.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">Review features</text>
+<text x="1238.9" y="246.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="review_features" class="nf-metro-station-label">Review features</text>
+<text x="1330.9" y="271.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="hanging">Freeze decisions</text>
+<text x="1330.9" y="271.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="hanging" data-station-id="review_decision" class="nf-metro-station-label">Freeze decisions</text>
+<text x="1478.1" y="176.0" font-size="14.0" fill="#ffffff" stroke="#ffffff" stroke-width="3.0" stroke-linejoin="round" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" aria-hidden="true" class="nf-metro-label-halo" text-anchor="middle" dominant-baseline="auto">Finalize</text>
+<text x="1478.1" y="176.0" font-size="14.0" fill="#333333" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="bold" text-anchor="middle" dominant-baseline="auto" data-station-id="finalize" class="nf-metro-station-label">Finalize</text>
+<text x="1600.0" y="346.0" font-size="8" fill="rgba(150, 150, 150, 0.6)" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="end">created with nf-metro v1.1.0</text>
+</svg>

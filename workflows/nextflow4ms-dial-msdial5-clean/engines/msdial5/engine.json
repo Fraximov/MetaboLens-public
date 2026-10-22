@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "review_transitions": {
+    "is_qc_review": "qc_preview",
+    "qc_preview": "full"
+  },
+  "engine_id": "msdial5",
+  "stages": [
+    {
+      "id": "prepare",
+      "label": "Prepare acquisition files",
+      "patterns": [
+        "prepare_msdial5_input"
+      ]
+    },
+    {
+      "id": "is_qc",
+      "label": "Internal-standard QC / RT correction (optional)",
+      "patterns": [
+        "extract_is_qc",
+        "build_rt_correction_plan",
+        "rewrite_mzml_retention_times"
+      ]
+    },
+    {
+      "id": "engine",
+      "label": "MS-DIAL feature detection and alignment",
+      "patterns": [
+        "peak_detection_msdial5"
+      ]
+    },
+    {
+      "id": "import",
+      "label": "Import aligned features into MetaboLensR",
+      "patterns": [
+        "MSDIAL_TO_METABOLENSR"
+      ]
+    },
+    {
+      "id": "qc_preview",
+      "label": "MetaboLensR QC preview",
+      "patterns": [
+        "METABOLENSR_PREVIEW"
+      ]
+    },
+    {
+      "id": "finalize",
+      "label": "MetaboLensR final matrices and report",
+      "patterns": [
+        "METABOLENSR_FINALIZE"
+      ]
+    },
+    {
+      "id": "annotation",
+      "label": "SIRIUS annotation (optional parallel branch)",
+      "patterns": [
+        "RUN_SIRIUS:"
+      ]
+    }
+  ],
+  "engine_version": "5.5",
+  "adapter_id": "msdial5-v1",
+  "importer_id": "msdial",
+  "entrypoint": "main_metabolensr.nf",
+  "required_inputs": {
+    "reference_file_id": "reference acquisition",
+    "msdial_config_path": "MS-DIAL template",
+    "ms1_library_path": "MS1 library",
+    "ms2_library_path": "MS2 library",
+    "is_library_path": "internal-standard library"
+  },
+  "support_files": [
+    "msdial_config_path",
+    "ms1_library_path",
+    "ms2_library_path",
+    "is_library_path"
+  ],
+  "capabilities": [
+    "qc_preview",
+    "is_qc_review",
+    "rt_correction",
+    "native_eic",
+    "sirius"
+  ],
+  "execution_profiles": [
+    "local_docker",
+    "slurm_singularity_ssh"
+  ],
+  "source_paths": [
+    "main_metabolensr.nf",
+    "nextflow.config",
+    "conf",
+    "modules",
+    "adapters",
+    "assets"
+  ],
+  "container_images": {
+    "msdial5_container_image": "metabolens-public-msdial5@sha256:656488ec5edb2862ecd87d6f85f8c45179a582011c134d089f54550ea75534d4",
+    "thermorawfileparser_image": "quay.io/biocontainers/thermorawfileparser@sha256:2b07a010c46fdc2c0cc918344c7400aaf7b5aec93ae645d2f9cafae43b513ada",
+    "stats_adapter_container_image": "metabolens-public-stats-adapter@sha256:422b0596ffb3301f9c0668aa6bb7cfaa18f30d64f7f007a499e119c1604f33ed",
+    "is_qc_container_image": "metabolens-public-is-qc@sha256:e1a39b80f85b0e68c588154077dc52cc44666ce72d2258cc0323831978ea93b7",
+    "sirius_container_image": "metabolens-public-sirius@sha256:6d8c804d6fcedcc533a4afe20314314704a1051a321387713343d5351ffa1e50"
+  },
+  "package": {
+    "version": "0.0.0.9003",
+    "commit": "d69ed62f68d76e4ffe61ed107190f6a16945e50b",
+    "container_image": "sha256:5608800abc630f5489e5b452741a8ac5e808508bcd0a0e46241a584a6ccc05ec",
+    "config": {
+      "schema_version": "1.0",
+      "profile": "strict",
+      "source_tool": "msdial",
+      "source_metadata": {
+        "version": "5.5",
+        "quantitation_type": "height"
+      }
+    },
+    "curation_profiles": {
+      "strict": {
+        "name": "strict",
+        "statistics": [
+          {
+            "rule_id": "has_annotation",
+            "params": {
+              "on_false": "exclude"
+            }
+          },
+          {
+            "rule_id": "minimum_sample_detection_pct",
+            "params": {
+              "review_below": 80,
+              "exclude_below": 50
+            }
+          },
+          {
+            "rule_id": "blank_to_sample_median_ratio",
+            "params": {
+              "review_above": 0.2,
+              "exclude_above": 0.2
+            }
+          },
+          {
+            "rule_id": "maximum_qc_cv_pct",
+            "params": {
+              "review_above": 20,
+              "exclude_above": 30
+            }
+          },
+          {
+            "rule_id": "has_ms2",
+            "params": {
+              "on_false": "exclude"
+            }
+          }
+        ],
+        "annotation": [
+          {
+            "rule_id": "minimum_sample_detection_pct",
+            "params": {
+              "review_below": 80,
+              "exclude_below": 50
+            }
+          },
+          {
+            "rule_id": "blank_to_sample_median_ratio",
+            "params": {
+              "review_above": 0.2,
+              "exclude_above": 0.2
+            }
+          },
+          {
+            "rule_id": "maximum_qc_cv_pct",
+            "params": {
+              "review_above": 20,
+              "exclude_above": 30
+            }
+          },
+          {
+            "rule_id": "has_ms2",
+            "params": {
+              "on_false": "exclude"
+            }
+          }
+        ]
+      }
+    },
+    "supports_rule_selection": true
+  }
+}

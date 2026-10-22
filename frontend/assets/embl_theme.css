@@ -1,0 +1,845 @@
+:root {
+  --bs-primary: #18974c;
+  --bs-primary-rgb: 24, 151, 76;
+  --bs-success: #007b53;
+  --bs-success-rgb: 0, 123, 83;
+  --bs-secondary: #707372;
+  --bs-secondary-rgb: 112, 115, 114;
+  --bs-link-color: #007b53;
+  --bs-link-hover-color: #18974c;
+  --bs-body-bg: #f8f9fa;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+.metabo-shell {
+  max-width: 100%;
+}
+
+.embl-navbar {
+  background-color: #007b53 !important;
+  min-height: 66px;
+  padding-block: 12px;
+  position: relative;
+  z-index: 1030;
+}
+
+.metabolens-banner-logo {
+  display: block;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.metabolens-facility-name {
+  font-size: 1.125rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.navbar-session {
+  margin-left: auto;
+  position: relative;
+}
+
+.navbar-session summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.navbar-session summary::-webkit-details-marker {
+  display: none;
+}
+
+.navbar-session-trigger {
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 0.4rem;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+}
+
+.navbar-session-trigger:hover,
+.navbar-session[open] .navbar-session-trigger {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-session-menu {
+  background: #fff;
+  border: 1px solid #d9e0dd;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(21, 48, 43, 0.16);
+  color: #2f3337;
+  padding: 1rem;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  width: min(360px, calc(100vw - 2rem));
+}
+
+.sidebar-wrap {
+  padding: 0.5rem;
+}
+
+.sidebar-context-title {
+  color: #007b53;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.sidebar-column {
+  align-self: flex-start;
+  position: sticky;
+  top: 78px;
+  z-index: 20;
+}
+
+/* The sidebar is sticky, so it must fit the viewport. On /jobs the job list
+   takes the space left under the nav and context, and scrolls inside it. */
+.sidebar-wrap {
+  max-height: calc(100vh - 78px - 2rem);
+}
+
+.sidebar-wrap > .card-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.sidebar-jobs {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 10rem;
+}
+
+/* Only the list gives up height; the title and status line keep theirs. */
+.sidebar-jobs > :not(.sidebar-job-list),
+.sidebar-wrap > .card-body > :not(.sidebar-jobs) {
+  flex-shrink: 0;
+}
+
+.sidebar-job-list {
+  flex: 1 1 auto;
+  margin-inline: -0.5rem;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.sidebar-nav .nav-link {
+  color: #707372;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-nav .nav-link.active {
+  background-color: #18974c !important;
+  color: #ffffff !important;
+}
+
+.main-content {
+  min-width: 0;
+  padding: 1.75rem 1.5rem;
+}
+
+.page-intro {
+  align-items: flex-start;
+  display: flex;
+  gap: 1.25rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.page-intro-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.page-intro-eyebrow,
+.section-eyebrow {
+  color: #007b53;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+}
+
+.page-intro-title {
+  font-size: 1.65rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.page-intro-description {
+  color: #5f666d;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0.3rem 0 0;
+  max-width: 760px;
+}
+
+.page-intro-side {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  max-width: 420px;
+  width: 100%;
+}
+
+.page-intro-meta,
+.page-intro-actions {
+  width: 100%;
+}
+
+.page-context-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(112, 115, 114, 0.18);
+  border-radius: 0.7rem;
+  padding: 0.85rem 1rem;
+}
+
+.page-context-label {
+  color: #707372;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.28rem;
+  text-transform: uppercase;
+}
+
+.page-context-line {
+  align-items: center;
+  color: #15302b;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.96rem;
+  font-weight: 700;
+  gap: 0.4rem;
+  line-height: 1.3;
+}
+
+.page-context-name,
+.page-context-empty {
+  overflow-wrap: anywhere;
+}
+
+.page-context-separator {
+  color: #707372;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.page-context-badges {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+.page-context-chip {
+  background: #edf1f4;
+  border-radius: 999px;
+  color: #4f565d;
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.32rem 0.5rem;
+}
+
+.page-context-helper {
+  color: #5f666d;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin-top: 0.35rem;
+}
+
+.metabo-card {
+  background: #ffffff;
+  border: 1px solid rgba(112, 115, 114, 0.18);
+  border-radius: 0.65rem;
+  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.07);
+}
+
+.section-title {
+  color: #007b53;
+  font-weight: 600;
+}
+
+.workspace-card .card-body,
+.quiet-card .card-body {
+  padding: 1.35rem;
+}
+
+.quiet-card {
+  background: #fcfcfb;
+}
+
+.section-header {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-header-copy {
+  min-width: 0;
+}
+
+.section-header-action {
+  flex: 0 0 auto;
+}
+
+.section-heading {
+  color: #15302b;
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.section-helper {
+  color: #5f666d;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0.35rem 0 0;
+}
+
+.section-helper.compact {
+  font-size: 0.84rem;
+}
+
+.status-box {
+  background: #f8f9fa;
+  border: 1px solid rgba(112, 115, 114, 0.24);
+  border-radius: 0.5rem;
+  color: #2f3337;
+  font-size: 0.88rem;
+  margin-bottom: 0;
+  min-height: 48px;
+  padding: 0.75rem;
+  white-space: pre-wrap;
+}
+
+.selection-reminder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.selection-reminder-compact {
+  gap: 0.75rem;
+}
+
+.selection-reminder-toggle {
+  background: #f8f9fa;
+  border: 1px solid rgba(112, 115, 114, 0.18);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.selection-reminder-toggle summary {
+  list-style: none;
+}
+
+.selection-reminder-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.selection-reminder-toggle-summary {
+  cursor: pointer;
+  display: block;
+  padding: 0.62rem 0.72rem;
+}
+
+.selection-reminder-summary-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.selection-reminder-summary-label {
+  color: #707372;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.selection-reminder-toggle-summary:hover {
+  background: rgba(0, 123, 83, 0.04);
+}
+
+.selection-reminder-toggle-body {
+  border-top: 1px solid rgba(112, 115, 114, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.72rem;
+}
+
+.selection-reminder-summary-line {
+  color: #2f3337;
+  font-size: 0.83rem;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.selection-reminder-summary-badges {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.selection-reminder-badge-separator {
+  color: #707372;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.selection-reminder-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.selection-reminder-block {
+  background: #f8f9fa;
+  border: 1px solid rgba(112, 115, 114, 0.18);
+  border-radius: 0.5rem;
+  padding: 0.7rem 0.8rem;
+}
+
+.selection-reminder-title {
+  color: #2f3337;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.selection-reminder-label {
+  color: #707372;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.selection-reminder-name {
+  color: #2f3337;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.selection-reminder-meta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.45rem;
+}
+
+.selection-reminder-id,
+.selection-reminder-chip {
+  background: #edf1f4;
+  border-radius: 999px;
+  color: #4f565d;
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.32rem 0.5rem;
+}
+
+.selection-reminder-empty,
+.selection-reminder-summary {
+  color: #5f666d;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.embl-table {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
+.embl-table thead th {
+  background-color: #ffffff;
+  border-bottom: 1px solid #d8dde2;
+  color: #707372;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.embl-table tbody td {
+  border-bottom: 1px solid #edf1f4;
+  color: #2f3337;
+}
+
+.jw-output-table {
+  table-layout: fixed;
+  min-width: 800px;
+}
+
+.jw-output-table th:nth-child(1) { width: 24%; }
+.jw-output-table th:nth-child(2) { width: 38%; }
+.jw-output-table th:nth-child(3) { width: 9%; }
+.jw-output-table th:nth-child(4) { width: 17%; }
+.jw-output-table th:nth-child(5) { width: 12%; }
+.jw-output-table td:nth-child(-n+2) { overflow-wrap: anywhere; }
+
+.table-scroll-panel {
+  border: 1px solid #edf1f4;
+  border-radius: 0.45rem;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+.table-scroll-panel .embl-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.state-pill {
+  background-color: var(--state-color, #707372);
+  border-radius: 999px;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.35rem 0.55rem;
+}
+
+.upload-surface {
+  align-items: center;
+  background: #ffffff;
+  border: 1px dashed #707372;
+  border-radius: 0.5rem;
+  color: #495057;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  min-height: 64px;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.upload-surface:hover {
+  border-color: #18974c;
+  color: #007b53;
+}
+
+.dash-table-container .Select-menu-outer,
+.dash-spreadsheet-container .Select-menu-outer {
+  display: block !important;
+  max-height: 240px;
+  z-index: 2000;
+}
+
+.dash-table-container .Select-menu,
+.dash-spreadsheet-container .Select-menu {
+  max-height: 240px;
+}
+
+.dash-table-container .Select-option,
+.dash-spreadsheet-container .Select-option {
+  white-space: normal;
+}
+
+.workspace-divider {
+  border-top: 1px solid rgba(112, 115, 114, 0.14);
+  margin: 1.35rem 0;
+  opacity: 1;
+}
+
+.subsection-title {
+  color: #2f3337;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.sample-metadata-table {
+  min-width: 1080px;
+}
+
+.sample-metadata-control {
+  min-width: 140px;
+}
+
+.sample-remove-btn {
+  min-width: 78px;
+  white-space: nowrap;
+}
+
+.inline-status {
+  background: #f8fbf9;
+  border: 1px solid rgba(0, 123, 83, 0.16);
+  border-radius: 0.55rem;
+  color: #2f3337;
+  font-size: 0.86rem;
+  margin-bottom: 0;
+  min-height: 0;
+  padding: 0.68rem 0.8rem;
+  white-space: pre-wrap;
+}
+
+.inline-status:empty {
+  display: none;
+}
+
+.sample-scan-toggle {
+  border: 1px solid rgba(112, 115, 114, 0.18);
+  border-radius: 0.55rem;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.sample-scan-toggle summary {
+  background: #f8f9fa;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  list-style: none;
+  padding: 0.75rem 0.9rem;
+}
+
+.sample-scan-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.sample-scan-toggle summary:hover {
+  background: rgba(0, 123, 83, 0.04);
+}
+
+.sample-preview-body {
+  border-top: 1px solid rgba(112, 115, 114, 0.14);
+  padding: 0.25rem 0.9rem 0.9rem;
+}
+
+.workflow-output-toggle {
+  overflow: hidden;
+}
+
+.workflow-output-toggle summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.workflow-output-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.workflow-output-summary {
+  display: block;
+  padding: 0.95rem 1.1rem;
+}
+
+.workflow-output-summary:hover {
+  background: rgba(0, 123, 83, 0.035);
+}
+
+.workflow-output-body {
+  border-top: 1px solid rgba(112, 115, 114, 0.14);
+  padding: 1rem 1.1rem 1.1rem;
+}
+
+.workflow-diagram-toggle {
+  overflow: hidden;
+}
+
+.workflow-diagram-toggle summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.workflow-diagram-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.workflow-diagram-summary {
+  display: block;
+  padding: 0.95rem 1.1rem;
+}
+
+.workflow-diagram-summary:hover {
+  background: rgba(0, 123, 83, 0.035);
+}
+
+.workflow-diagram-body {
+  border-top: 1px solid rgba(112, 115, 114, 0.14);
+  padding: 1rem 1.1rem 1.1rem;
+}
+
+.workflow-dag-frame {
+  background: #fcfcfb;
+  border: 1px solid rgba(112, 115, 114, 0.18);
+  border-radius: 0.55rem;
+  overflow-x: auto;
+  padding: 0.75rem;
+}
+
+.workflow-dag-image {
+  display: block;
+  height: auto;
+  min-width: 760px;
+  width: 100%;
+}
+
+.dashboard-kpi-strip {
+  min-height: 64px;
+}
+
+.dashboard-empty-strip {
+  background: #ffffff;
+  border: 1px dashed rgba(112, 115, 114, 0.3);
+  border-radius: 0.65rem;
+  padding: 0.9rem 1rem;
+}
+
+.dashboard-metric-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.dashboard-metric-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f6faf7 100%);
+  border: 1px solid rgba(112, 115, 114, 0.18);
+  border-radius: 0.65rem;
+  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.05);
+  min-height: 110px;
+  padding: 0.95rem 1rem;
+}
+
+.dashboard-metric-label {
+  color: #707372;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.dashboard-metric-value {
+  align-items: center;
+  color: #15302b;
+  display: flex;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0.6rem;
+  min-height: 34px;
+}
+
+.dashboard-metric-helper {
+  color: #5f666d;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  margin-top: 0.45rem;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 991.98px) {
+  .page-intro,
+  .section-header {
+    flex-direction: column;
+  }
+
+  .page-intro-side,
+  .section-header-action {
+    max-width: none;
+    width: 100%;
+  }
+
+  .section-header-action .btn {
+    width: 100%;
+  }
+
+  .dashboard-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 575.98px) {
+  .dashboard-metric-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Sample strip: categorical identity for acquisition type. Validated together on
+   both surfaces -- lightness band, chroma floor, CVD separation, normal-vision
+   floor and contrast all pass. Deliberately not the run-status colours, which
+   are reserved for state. */
+.jw-sample-strip {
+  --sample-sample: #2a78d6;
+  --sample-qc:     #eb6834;
+  --sample-blank:  #4a3aa7;
+  --sample-other:  #eda100;
+  --strip-rule:    rgba(112, 115, 114, 0.35);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .jw-sample-strip {
+    --sample-sample: #3987e5;
+    --sample-qc:     #d95926;
+    --sample-blank:  #9085e9;
+    --sample-other:  #c98500;
+    --strip-rule:    rgba(200, 202, 201, 0.30);
+  }
+}
+:root[data-theme="dark"] .jw-sample-strip {
+  --sample-sample: #3987e5;
+  --sample-qc:     #d95926;
+  --sample-blank:  #9085e9;
+  --sample-other:  #c98500;
+  --strip-rule:    rgba(200, 202, 201, 0.30);
+}
+
+/* Job picker selection. The open job is in the URL, so dbc.NavLink(active="exact")
+   sets .active in the browser and this highlight costs no callback -- the same
+   reason the route carries the job in the first place. Kept to a tint and a left
+   rail rather than a filled row: the status square already carries run state, and
+   a solid fill would compete with it for the same glance. The rail is an inset
+   shadow, not a border, so selection changes nothing about the row's box.
+
+   Light values only, deliberately. The app loads dbc.themes.FLATLY and nothing
+   sets data-theme, so a prefers-color-scheme block here would recolour this text
+   while the card underneath stayed white -- unreadable rows for anyone whose OS
+   is dark. The sample strip above can carry dark tokens because it only recolours
+   its own bars. Add dark values here when the app itself gains a dark surface. */
+.jw-job-link {
+  border-radius: 0.25rem;
+  color: #212529;
+}
+
+.jw-job-link:hover,
+.jw-job-link:focus-visible {
+  background-color: rgba(112, 115, 114, 0.08);
+  color: #212529;
+}
+
+.jw-job-link.active {
+  background-color: rgba(24, 151, 76, 0.10);
+  box-shadow: inset 2px 0 0 #18974c;
+  color: #212529;
+  font-weight: 600;
+}
+
+/* The launch time is .text-muted, tuned for the card background rather than the
+   tinted one. Hold its contrast on the selected row. */
+.jw-job-link.active .text-muted {
+  color: #4c4f4e !important;
+}

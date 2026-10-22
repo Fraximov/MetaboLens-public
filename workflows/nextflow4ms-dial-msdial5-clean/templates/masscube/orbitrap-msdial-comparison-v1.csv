@@ -1,0 +1,32 @@
+parameter,value,description
+rt_lower_limit,0.5,Minutes; lower retention-time limit
+rt_upper_limit,18,Minutes; upper retention-time limit
+mz_lower_limit,60,Da; MS1 only; matches MS-DIAL mass range begin
+mz_upper_limit,900,Da; MS1 only; matches MS-DIAL mass range end; MS2 range is not independently configurable
+mz_tol_ms1,0.01,Da; MS1 feature detection AND annotation precursor tolerance; MS-DIAL annotation used 0.005
+mz_tol_ms2,0.02,Da; matches MS-DIAL centroid and library MS2 tolerances
+ms1_abs_int_tol,30000,Scan intensity cutoff; same number as MS-DIAL minimum peak height but different filtering behavior
+ms2_abs_int_tol,10000,Native MassCube 1.2.22 MS2 scan intensity cutoff
+ms2_rel_int_tol,0,Native relative MS2 intensity cutoff
+feature_gap_tol,10,Allowed consecutive scan gaps; not MS-DIAL minimum peak width
+scan_number_cutoff,5,Alignment requires more than this many scans or MS2 evidence; not MS-DIAL peak width
+noise_tol,2,Native feature noise cutoff; no direct MS-DIAL equivalent
+gaussian_similarity_tol,0.7,Native alignment quality threshold; no direct MS-DIAL equivalent
+mz_tol_alignment,0.005,Da; matches MS-DIAL alignment MS1 tolerance
+rt_tol_alignment,0.15,Minutes; matches MS-DIAL alignment retention time tolerance
+detection_rate_cutoff,0,Matches intent of MS-DIAL zero peak-count filter; algorithms differ
+gap_filling_rt_window,0.05,Minutes; native local-maximum search window; no direct MS-DIAL equivalent
+ms2_sim_tol,0.7,Native entropy similarity; not equivalent to MS-DIAL identification score 80
+consider_rt,true,Try RT-constrained library matching first; MassCube can fall back to matching without RT
+rt_tol_annotation,2,Minutes; matches MS-DIAL library RT tolerance; filtering behavior differs
+fuzzy_search,false,Native default; do not enable fuzzy precursor matching for this comparison
+quant_method,peak_height,Fixed by validated integration; aligns with MS-DIAL peak-height output
+merge_features,false,Fixed by validated integration to preserve acquisition evidence
+correct_rt,false,Fixed by validated integration; MS-DIAL RT processing is algorithm-specific
+group_features_after_alignment,false,Fixed; downstream curation belongs to MetaboLensR
+group_features_single_file,false,Fixed; downstream curation belongs to MetaboLensR
+sample_normalization,false,Fixed; normalization belongs to MetaboLensR
+signal_normalization,false,Fixed; normalization belongs to MetaboLensR
+run_statistics,false,Fixed; statistics belong to MetaboLensR
+fill_gaps,true,Fixed; matches intent of MS-DIAL force gap filling
+gap_filling_method,local_maximum,Fixed by validated integration; algorithms differ

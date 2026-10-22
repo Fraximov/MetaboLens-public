@@ -1,0 +1,16 @@
+{
+  "metabolights_utils": "1.4.35",
+  "policy_version": "2.2.0",
+  "template_commit": "6ddfeebdc3d7960a7238fbbe5b8a736ad3b85b15",
+  "opa_version": "1.4.2",
+  "files": {
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "a_lcms.txt": "06670ab5f538d8415572fcee70a46440462778839fcccbee575eb2212f4123e1",
+    "bundle.tar.gz": "2865bc402f0fe1d62a89a25bf18c87e56b4c192d97bfedf0518bb4bd96d048f1",
+    "i_Investigation.txt": "a7726e24476d86172824d1de88cf820e721ebcbd5791e8213e518c60739f9b78",
+    "m_ms.tsv": "d57801d8b7279ba7a8daa734226afc8c819148068512276f6cb47c44077561d8",
+    "protocols.json": "df241c1d34289c733ff8faabd815865188b981562f55f675ff5dcf91d3e83f3b",
+    "s_sample.txt": "94e8a01bd0bd9b0e3642c8daf8e68eef4dfaa973c1662f5ae657671e089bcf36"
+  },
+  "template_version": "2.0"
+}

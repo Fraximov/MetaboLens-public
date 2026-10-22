@@ -1,0 +1,31 @@
+FROM debian:bookworm-slim
+
+LABEL org.metabolens.public-build="true"
+LABEL org.opencontainers.image.title="MetaboLens SIRIUS runtime"
+LABEL org.opencontainers.image.description="Standalone SIRIUS CLI runtime for optional MetaboLens annotation modules."
+
+ARG SIRIUS_VERSION=6.3.4
+ARG TARGETARCH
+
+WORKDIR /opt/metabolens
+
+RUN apt-get update -qq \
+    && apt-get install -y --no-install-recommends ca-certificates curl procps unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN set -eux; \
+    case "${TARGETARCH:-amd64}" in \
+      amd64) sirius_arch="x64"; sirius_sha="a697b5b140488ac1cc2d547efd7540da191e00a1403e099c5def79c2ad63f574" ;; \
+      arm64) sirius_arch="arm64"; sirius_sha="4e36901461fc9ebc144bb29294a0a864151538409711b34618fcea5d65052fc8" ;; \
+      *) echo "Unsupported Docker target architecture: ${TARGETARCH}" >&2; exit 1 ;; \
+    esac; \
+    curl -fsSL \
+      -o /tmp/sirius.zip \
+      "https://github.com/sirius-ms/sirius/releases/download/v${SIRIUS_VERSION}/sirius-${SIRIUS_VERSION}-linux-${sirius_arch}.zip"; \
+    echo "${sirius_sha}  /tmp/sirius.zip" | sha256sum -c -; \
+    unzip -q /tmp/sirius.zip -d /opt; \
+    rm /tmp/sirius.zip; \
+    sirius_bin="$(find /opt -type f -path '*/bin/sirius' | head -n 1)"; \
+    test -n "${sirius_bin}"; \
+    ln -s "${sirius_bin}" /usr/local/bin/sirius; \
+    sirius --help >/dev/null

@@ -1,0 +1,21 @@
+{
+  "about": "Controlled terms MetaboLens writes into ISA files. Owned by MetaboLens, not part of the pinned upstream bundle in lock.json. Each term is an exact alias accepted by the pinned MetaboLights 2.2.0 policy; values without an entry are exported as recorded, without a guessed term. Keys are matched case-insensitively.",
+  "assay_parameters": {
+    "Parameter Value[Column type]": {
+      "HILIC": {"name": "HILIC", "source": "MTBLS", "accession": "http://www.ebi.ac.uk/metabolights/ontology/MTBLS_000856"}
+    },
+    "Parameter Value[Chromatography Instrument]": {
+      "Vanquish UHPLC": {"name": "Thermo Scientific Vanquish UHPLC System", "source": "MTBLS", "accession": "http://www.ebi.ac.uk/metabolights/ontology/MTBLS_000858"}
+    }
+  },
+  "publication_status": {
+    "in preparation": {"name": "in preparation", "source": "EFO", "accession": "http://www.ebi.ac.uk/efo/EFO_0001795"},
+    "submitted": {"name": "submitted", "source": "EFO", "accession": "http://www.ebi.ac.uk/efo/EFO_0001794"},
+    "published": {"name": "published", "source": "EFO", "accession": "http://www.ebi.ac.uk/efo/EFO_0001796"},
+    "preprint": {"name": "preprint", "source": "EFO", "accession": "http://www.ebi.ac.uk/efo/EFO_0010558"},
+    "learning material": {"name": "Learning material", "source": "EDAM", "accession": "http://edamontology.org/data_3669"}
+  },
+  "contact_roles": {
+    "principal investigator": {"name": "Principal Investigator", "source": "NCIT", "accession": "http://purl.obolibrary.org/obo/NCIT_C19924"}
+  }
+}

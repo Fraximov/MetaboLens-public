@@ -1,0 +1,129 @@
+name: metabolens-public
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: metabolens
+      POSTGRES_USER: metabolens
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run scripts/configure_local.py first}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U metabolens -d metabolens"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    image: metabolens-public-backend:latest
+    build:
+      context: ../..
+      dockerfile: infra/docker/backend.Dockerfile
+    environment:
+      APP_ENV: production
+      APP_SECRET_KEY: ${APP_SECRET_KEY:?Run scripts/configure_local.py first}
+      BOOTSTRAP_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL:?Run scripts/configure_local.py first}
+      BOOTSTRAP_ADMIN_PASSWORD: ${BOOTSTRAP_ADMIN_PASSWORD:?Run scripts/configure_local.py first}
+      DATABASE_URL: postgresql+psycopg2://metabolens:${POSTGRES_PASSWORD:?Run scripts/configure_local.py first}@db:5432/metabolens
+      TOKEN_EXPIRE_MINUTES: 1440
+      CORS_ORIGINS: http://127.0.0.1:18050,http://localhost:18050
+      AUTO_SEED: "false"
+      UPLOAD_STORAGE_BACKEND: local
+      UPLOAD_STORAGE_DIR: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads
+      STUDY_PACKAGE_ROOT: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads/study-packages
+      RAW_PATH_BROWSE_ROOTS: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads,/raw_test
+      WORKFLOW_PIPELINE_ROOT: /app/workflows/nextflow4ms-dial-msdial5-clean
+    ports:
+      - "127.0.0.1:18000:8000"
+    volumes:
+      - raw_uploads:/data/uploads
+      - type: bind
+        source: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads
+        target: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads
+      - type: bind
+        source: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/raw_test
+        target: /raw_test
+      - type: bind
+        source: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/workflow-runs
+        target: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/workflow-runs
+        read_only: true
+      - type: bind
+        source: ../../workflows/nextflow4ms-dial-msdial5-clean
+        target: /app/workflows/nextflow4ms-dial-msdial5-clean
+        read_only: true
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    image: metabolens-public-frontend:latest
+    build:
+      context: ../..
+      dockerfile: infra/docker/frontend.Dockerfile
+    environment:
+      API_BASE_URL: http://backend:8000
+    ports:
+      - "127.0.0.1:18050:8050"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  worker:
+    image: metabolens-public-worker:latest
+    build:
+      context: ../..
+      dockerfile: infra/docker/worker.Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_SECRET_KEY: ${APP_SECRET_KEY:?Run scripts/configure_local.py first}
+      DATABASE_URL: postgresql+psycopg2://metabolens:${POSTGRES_PASSWORD:?Run scripts/configure_local.py first}@db:5432/metabolens
+      WORKER_POLL_INTERVAL_SECONDS: 5
+      STUDY_PACKAGE_ROOT: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads/study-packages
+      STUDY_PACKAGE_EXPORT_ROOT: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads/study-exports
+      NEXTFLOW_MODE: external
+      WORKFLOW_EXECUTION_PROFILE: local_docker
+      WORKFLOW_PIPELINE_ROOT: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/workflows/nextflow4ms-dial-msdial5-clean
+      WORKFLOW_RUNS_ROOT: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/workflow-runs
+      WORKFLOW_LOCAL_RUNS_ROOT: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/workflow-runs
+      WORKFLOW_NEXTFLOW_BIN: nextflow
+      WORKFLOW_NEXTFLOW_DEFAULT_PROFILE: docker
+      WORKFLOW_NEXTFLOW_POLL_SECONDS: 2
+      WORKFLOW_STATUS_UPDATE_SECONDS: 15
+      WORKFLOW_NEXTFLOW_TIMEOUT_SECONDS: 0
+      WORKFLOW_LOCAL_MAX_MEMORY_GB: 6
+      WORKFLOW_LOCAL_PEAK_MEMORY_GB: 6
+      WORKFLOW_LOCAL_PREPARE_MEMORY_GB: 4
+      WORKFLOW_LOCAL_DEFAULT_CPUS: 1
+      WORKFLOW_LOCAL_PEAK_CPUS: 1
+      WORKFLOW_SIRIUS_CONTAINER_OPTIONS: '-e HOME=/sirius-home -e JAVA_TOOL_OPTIONS=-Duser.home=/sirius-home -v "${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/sirius-home:/sirius-home"'
+    volumes:
+      - raw_uploads:/data/uploads
+      - type: bind
+        source: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads
+        target: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/uploads
+      - type: bind
+        source: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/raw_test
+        target: /raw_test
+      - type: bind
+        source: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/workflow-runs
+        target: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/runtime/workflow-runs
+      - type: bind
+        source: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/workflows/nextflow4ms-dial-msdial5-clean
+        target: ${METABOLENS_HOST_ROOT:?Run scripts/configure_local.py first}/workflows/nextflow4ms-dial-msdial5-clean
+        read_only: true
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  raw_uploads:

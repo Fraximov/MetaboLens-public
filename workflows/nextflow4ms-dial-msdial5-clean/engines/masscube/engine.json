@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "engine_id": "masscube",
+  "engine_version": "1.2.22",
+  "adapter_id": "masscube-v1",
+  "evidence_adapter_id": "masscube-indexed-v1",
+  "importer_id": "masscube",
+  "entrypoint": "main_masscube.nf",
+  "required_inputs": {},
+  "input_extensions": [
+    ".raw",
+    ".mzml"
+  ],
+  "minimum_acquisitions": 2,
+  "support_files": [
+    "ms2_library_path"
+  ],
+  "capabilities": [
+    "qc_preview",
+    "native_eic",
+    "native_ms2"
+  ],
+  "review_transitions": {
+    "qc_preview": "full"
+  },
+  "stages": [
+    {
+      "id": "prepare",
+      "label": "Prepare acquisition files",
+      "patterns": [
+        "prepare_acquisition_input"
+      ]
+    },
+    {
+      "id": "engine",
+      "label": "MassCube detection, alignment and native evidence",
+      "patterns": [
+        "MASSCUBE_PROCESS"
+      ]
+    },
+    {
+      "id": "qc_preview",
+      "label": "MetaboLensR QC preview",
+      "patterns": [
+        "METABOLENSR_PREVIEW"
+      ]
+    },
+    {
+      "id": "finalize",
+      "label": "MetaboLensR final matrices and report",
+      "patterns": [
+        "METABOLENSR_FINALIZE"
+      ]
+    }
+  ],
+  "execution_profiles": [
+    "local_docker",
+    "slurm_singularity_ssh"
+  ],
+  "source_paths": [
+    "main_masscube.nf",
+    "nextflow.config",
+    "conf",
+    "modules",
+    "adapters",
+    "assets"
+  ],
+  "container_images": {
+    "masscube_container_image": "metabolens-public-masscube@sha256:185e195b8f4493aeb053132ccb22ec7be880ded3f0e4963f45836bb98ece3251",
+    "thermorawfileparser_image": "quay.io/biocontainers/thermorawfileparser@sha256:2b07a010c46fdc2c0cc918344c7400aaf7b5aec93ae645d2f9cafae43b513ada"
+  },
+  "package": {
+    "version": "0.0.0.9003",
+    "commit": "d69ed62f68d76e4ffe61ed107190f6a16945e50b",
+    "container_image": "sha256:5608800abc630f5489e5b452741a8ac5e808508bcd0a0e46241a584a6ccc05ec",
+    "config": {
+      "schema_version": "1.0",
+      "profile": "strict",
+      "source_tool": "masscube",
+      "source_metadata": {
+        "version": "1.2.22",
+        "quantitation_type": "peak_height",
+        "evidence_adapter_id": "masscube-indexed-v1"
+      }
+    },
+    "curation_profiles": {
+      "strict": {
+        "name": "strict",
+        "statistics": [
+          {
+            "rule_id": "has_annotation",
+            "params": {
+              "on_false": "exclude"
+            }
+          },
+          {
+            "rule_id": "minimum_sample_detection_pct",
+            "params": {
+              "review_below": 80,
+              "exclude_below": 50
+            }
+          },
+          {
+            "rule_id": "blank_to_sample_median_ratio",
+            "params": {
+              "review_above": 0.2,
+              "exclude_above": 0.2
+            }
+          },
+          {
+            "rule_id": "maximum_qc_cv_pct",
+            "params": {
+              "review_above": 20,
+              "exclude_above": 30
+            }
+          },
+          {
+            "rule_id": "has_ms2",
+            "params": {
+              "on_false": "exclude"
+            }
+          }
+        ],
+        "annotation": [
+          {
+            "rule_id": "minimum_sample_detection_pct",
+            "params": {
+              "review_below": 80,
+              "exclude_below": 50
+            }
+          },
+          {
+            "rule_id": "blank_to_sample_median_ratio",
+            "params": {
+              "review_above": 0.2,
+              "exclude_above": 0.2
+            }
+          },
+          {
+            "rule_id": "maximum_qc_cv_pct",
+            "params": {
+              "review_above": 20,
+              "exclude_above": 30
+            }
+          },
+          {
+            "rule_id": "has_ms2",
+            "params": {
+              "on_false": "exclude"
+            }
+          }
+        ]
+      }
+    },
+    "supports_rule_selection": true
+  }
+}

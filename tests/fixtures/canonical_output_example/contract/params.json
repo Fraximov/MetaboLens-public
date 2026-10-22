@@ -1,0 +1,15 @@
+{
+  "job_id": 7,
+  "workflow_definition_id": 3,
+  "run_name": "std1_assay2_job7",
+  "nextflow_params": {
+    "analysis_mode": "full",
+    "workflow_stage": "full"
+  },
+  "selected_files": [
+    {
+      "file_asset_id": 11,
+      "original_filename": "sample_a.raw"
+    }
+  ]
+}

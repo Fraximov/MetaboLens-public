@@ -1,0 +1,60 @@
+# Build with scripts/build_metabolensr_image.py to install an exact Git commit.
+FROM debian:bookworm-slim AS runtime
+
+ARG QUARTO_VERSION=1.9.38
+ARG TARGETARCH
+
+RUN apt-get update -qq \
+    && apt-get install -y --no-install-recommends \
+       ca-certificates curl procps r-base r-base-dev \
+       r-bioc-summarizedexperiment r-bioc-s4vectors \
+       r-cran-dt r-cran-htmltools r-cran-jsonlite r-cran-knitr \
+       r-cran-optparse r-cran-plotly r-cran-cli r-cran-fs \
+       r-cran-later r-cran-lifecycle r-cran-processx r-cran-rlang \
+       r-cran-rmarkdown r-cran-rstudioapi r-cran-xfun r-cran-yaml \
+    && rm -rf /var/lib/apt/lists/*
+
+# Pinned upstream releases; all downloads occur during image construction.
+RUN curl -fsSL "https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-${TARGETARCH}.deb" -o /tmp/quarto.deb \
+    && dpkg -i /tmp/quarto.deb \
+    && curl -fsSL https://cran.r-project.org/src/contrib/Archive/yaml/yaml_2.3.10.tar.gz -o /tmp/yaml.tar.gz \
+    && R CMD INSTALL /tmp/yaml.tar.gz \
+    && curl -fsSL https://cran.r-project.org/src/contrib/Archive/xfun/xfun_0.54.tar.gz -o /tmp/xfun.tar.gz \
+    && R CMD INSTALL /tmp/xfun.tar.gz \
+    && curl -fsSL https://github.com/quarto-dev/quarto-r/archive/refs/tags/v1.5.1.tar.gz -o /tmp/quarto-r.tar.gz \
+    && R CMD INSTALL /tmp/quarto-r.tar.gz \
+    && rm /tmp/quarto.deb /tmp/yaml.tar.gz /tmp/xfun.tar.gz /tmp/quarto-r.tar.gz
+
+# Keep Debian's dependency installation, but use upstream Plotly's matching JS.
+# Debian plotly 4.10.1 declares JS 2.11.1 while shipping the incompatible 1.31.2.
+RUN curl -fsSL https://cran.r-project.org/src/contrib/Archive/plotly/plotly_4.10.1.tar.gz -o /tmp/plotly.tar.gz \
+    && echo 'ac0921a1cba24e17a0f3a0a28b7a40ac930e17fe5caa9c3973c9a8d1e20c367a  /tmp/plotly.tar.gz' | sha256sum -c - \
+    && R CMD INSTALL /tmp/plotly.tar.gz \
+    && rm /tmp/plotly.tar.gz
+COPY check_plotly_runtime.R /tmp/check_plotly_runtime.R
+RUN Rscript /tmp/check_plotly_runtime.R && rm /tmp/check_plotly_runtime.R
+
+# DT's filters need standalone Selectize (including Sifter and MicroPlugin).
+# Debian substitutes a non-standalone file, interrupting htmlwidgets rendering.
+RUN curl -fsSL https://cran.r-project.org/src/contrib/Archive/DT/DT_0.27.tar.gz -o /tmp/DT.tar.gz \
+    && echo 'e32fdccd2be430933cff88a9ce79045bfdbe3e08e0cd8d15037445808613289a  /tmp/DT.tar.gz' | sha256sum -c - \
+    && R CMD INSTALL /tmp/DT.tar.gz \
+    && rm /tmp/DT.tar.gz
+
+FROM runtime
+ARG PACKAGE_COMMIT
+ARG PACKAGE_SHA256
+LABEL org.opencontainers.image.title="MetaboLensR" \
+      org.opencontainers.image.revision="${PACKAGE_COMMIT}" \
+      org.metabolens.package.sha256="${PACKAGE_SHA256}"
+COPY MetaboLensR.tar.gz /tmp/MetaboLensR.tar.gz
+RUN test -n "$PACKAGE_COMMIT" && test -n "$PACKAGE_SHA256" \
+    && echo "$PACKAGE_SHA256  /tmp/MetaboLensR.tar.gz" | sha256sum -c - \
+    && R CMD INSTALL /tmp/MetaboLensR.tar.gz \
+    && rm /tmp/MetaboLensR.tar.gz \
+    && printf '#!/bin/sh\nexec Rscript /usr/local/lib/R/site-library/MetaboLensR/cli/metabolensr.R "$@"\n' > /usr/local/bin/metabolensr \
+    && chmod +x /usr/local/bin/metabolensr \
+    && metabolensr --help
+
+WORKDIR /work
+CMD ["metabolensr", "--help"]

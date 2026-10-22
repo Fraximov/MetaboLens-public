@@ -1,0 +1,4 @@
+SQLAlchemy==2.0.38
+psycopg2-binary==2.9.10
+pydantic-settings==2.8.1
+jsonschema==4.23.0

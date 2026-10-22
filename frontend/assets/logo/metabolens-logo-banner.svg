@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="448" height="80" viewBox="0 0 448 80" role="img" aria-labelledby="title desc">
+  <title id="title">MetaboLens</title>
+  <desc id="desc">A slender white lens containing a spiral galaxy with distinct molecular dots optimized for banner size beside the MetaboLens wordmark, for dark backgrounds.</desc>
+  <g fill="#ffffff">
+    <path d="M10 31H8C2 31 2 49 8 49h2c-4-5-4-13 0-18Z"/>
+    <path d="M17 27h16c-5 7-5 19 0 26H17c-8 0-8-26 0-26Z"/>
+    <path d="M42 22h18c-10 10-10 26 0 36H42c-12 0-12-36 0-36Z"/>
+    <circle cx="86" cy="40" r="25.6" fill="#123e63"/>
+  </g>
+  <circle cx="86" cy="40" r="31" fill="none" stroke="#b8f1d6" stroke-width="2.6"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M81.12 37.69C79.86 35.31 80.33 31.35 83.30 28.44C86.28 25.54 91.75 23.91 97.40 25.64C103.04 27.37 108.64 32.56 110.80 40.00" stroke="#ffffff" stroke-width=".8" />
+    <path d="M80.99 37.07C80.20 34.40 81.53 30.38 85.31 28.12C89.09 25.86 95.21 25.68 100.38 29.17C105.55 32.66 109.44 39.86 108.74 47.99" stroke="#a4e1c8" stroke-width=".7" />
+    <path d="M83.07 34.54C83.75 32.03 86.45 29.46 90.33 28.95C94.21 28.45 99.16 30.13 102.59 34.31C106.02 38.49 107.74 45.13 105.94 51.85" stroke="#59b895" stroke-width=".7" />
+    <path d="M85.20 34.26C86.72 32.16 90.31 30.79 94.13 32.01C97.95 33.23 101.77 37.14 102.79 42.65C103.81 48.17 101.82 55.13 96.45 60.04" stroke="#ffffff" stroke-width=".7" />
+    <path d="M88.03 34.14C90.47 32.80 94.52 33.07 97.70 35.90C100.88 38.73 102.96 44.10 101.73 49.93C100.50 55.75 95.84 61.80 88.67 64.66" stroke="#a4e1c8" stroke-width=".7" />
+    <path d="M87.77 34.90C90.13 33.52 94.30 33.92 97.26 37.09C100.23 40.26 101.67 46.17 99.31 51.92C96.95 57.67 90.68 62.92 82.57 63.85" stroke="#59b895" stroke-width=".8" />
+    <path d="M90.95 36.98C93.47 37.40 96.23 39.84 97.02 43.63C97.81 47.42 96.48 52.44 92.55 56.12C88.62 59.80 82.11 61.96 75.27 60.57" stroke="#e3f5ed" stroke-width=".7" />
+    <path d="M91.28 38.86C93.50 40.10 95.21 43.49 94.36 47.35C93.51 51.21 89.98 55.34 84.59 56.81C79.20 58.27 72.10 56.86 66.78 51.88" stroke="#a4e1c8" stroke-width=".8" />
+    <path d="M91.77 40.60C93.69 42.55 94.45 46.50 92.52 50.23C90.58 53.97 85.89 57.27 79.97 57.45C74.04 57.64 67.06 54.54 62.60 48.22" stroke="#59b895" stroke-width=".7" />
+    <path d="M92.04 41.39C93.52 43.82 93.33 48.11 90.30 51.38C87.27 54.65 81.42 56.58 75.43 54.73C69.44 52.88 63.63 47.12 61.91 39.16" stroke="#e3f5ed" stroke-width=".7" />
+    <path d="M89.66 43.97C89.85 46.49 88.10 49.69 84.61 51.25C81.12 52.81 75.96 52.56 71.57 49.48C67.18 46.39 63.75 40.45 63.74 33.46" stroke="#ffffff" stroke-width=".8" />
+    <path d="M88.46 45.69C87.41 48.13 84.20 50.34 80.14 50.09C76.09 49.84 71.38 47.00 68.97 41.91C66.57 36.81 66.70 29.57 70.61 23.45" stroke="#59b895" stroke-width=".7" />
+    <path d="M85.83 45.40C84.15 47.50 80.34 48.66 76.48 47.09C72.63 45.52 68.95 41.16 68.28 35.29C67.61 29.42 70.13 22.21 76.09 17.26" stroke="#e3f5ed" stroke-width=".8" />
+    <path d="M86.02 45.80C84.13 47.84 79.98 48.74 76.12 46.63C72.26 44.52 68.99 39.35 69.37 33.12C69.74 26.89 73.97 19.88 81.33 16.36" stroke="#ffffff" stroke-width=".7" />
+    <path d="M81.92 44.66C79.32 44.90 75.97 43.28 74.13 39.82C72.30 36.36 72.14 31.14 74.85 26.47C77.56 21.79 83.17 17.84 90.10 17.17" stroke="#a4e1c8" stroke-width=".7" />
+    <path d="M80.81 42.59C78.33 41.81 75.89 38.84 75.84 34.83C75.78 30.82 78.27 25.96 83.17 23.24C88.08 20.52 95.31 20.19 101.67 23.72" stroke="#e3f5ed" stroke-width=".7" />
+    <path d="M79.88 41.02C77.54 39.52 75.84 35.83 76.81 31.68C77.77 27.54 81.50 23.14 87.20 21.44C92.90 19.74 100.45 20.93 106.38 25.87" stroke="#ffffff" stroke-width=".7" />
+    <path d="M80.62 40.41C78.41 38.81 77.11 34.82 78.83 30.84C80.55 26.85 85.40 23.17 91.61 23.04C97.82 22.90 105.14 26.55 109.24 33.61" stroke="#a4e1c8" stroke-width=".8" />
+  </g>
+  <g>
+    <circle cx="107.30" cy="32.85" r="1.4" fill="#72caa6" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="108.46" cy="41.96" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="106.53" cy="48.83" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="101.00" cy="54.09" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="93.69" cy="61.91" r="1.4" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="86.11" cy="63.16" r="1.25" fill="#72caa6" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="76.19" cy="60.74" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="71.15" cy="55.04" r="1.25" fill="#72caa6" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="64.77" cy="50.86" r="1.4" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="62.17" cy="40.22" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="69.09" cy="26.27" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="75.31" cy="17.95" r="1.25" fill="#72caa6" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="85.06" cy="18.27" r="1.4" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="100.81" cy="23.26" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="82.96" cy="28.80" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="99.21" cy="28.45" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="102.95" cy="43.73" r="1.4" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="99.10" cy="39.72" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="89.89" cy="58.16" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="92.37" cy="51.65" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="76.76" cy="55.09" r="1.4" fill="#72caa6" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="68.54" cy="40.90" r="1.25" fill="#72caa6" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="73.51" cy="44.69" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="76.82" cy="23.73" r="1.25" fill="#72caa6" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="76.79" cy="30.14" r="1.4" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <circle cx="90.25" cy="23.12" r="1.25" fill="#ffffff" stroke="#123e63" stroke-width=".6" paint-order="stroke fill" />
+    <path d="M91.7 39.7c.2 3.4-2.4 6-5.7 6.2-3.7.2-6.3-2-6.2-5.6.1-3.7 2.8-6.3 6.1-6.2 3.1.1 5.6 2.3 5.8 5.6Z" fill="#ffffff" />
+  </g>
+  <text x="140" y="54" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="700" letter-spacing="-1.5" fill="#ffffff">Metabo<tspan fill="#b8f1d6">Lens</tspan></text>
+</svg>

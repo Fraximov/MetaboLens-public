@@ -1,0 +1,115 @@
+{
+  "type": "object",
+  "properties": {
+    "msdial_config_path": {
+      "type": "string"
+    },
+    "ms1_library_path": {
+      "type": "string"
+    },
+    "ms2_library_path": {
+      "type": "string"
+    },
+    "is_library_path": {
+      "type": "string"
+    },
+    "reference_file_id": {
+      "type": "integer"
+    },
+    "workflow_stage": {
+      "type": "string",
+      "enum": [
+        "full",
+        "is_qc_review",
+        "qc_preview"
+      ],
+      "default": "full"
+    },
+    "analysis_mode": {
+      "type": "string",
+      "enum": [
+        "qc_only"
+      ],
+      "default": "qc_only"
+    },
+    "stats_factor_column": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+      "default": "group_label"
+    },
+    "enable_sirius": {
+      "type": "boolean",
+      "default": false
+    },
+    "sirius_annotation_mode": {
+      "type": "string",
+      "enum": [
+        "formulas",
+        "canopus",
+        "structures",
+        "full"
+      ],
+      "default": "formulas"
+    },
+    "sirius_structure_db": {
+      "type": "string",
+      "default": "ALL"
+    },
+    "sirius_ms1_tolerance": {
+      "type": "number",
+      "minimum": 0,
+      "default": 2
+    },
+    "sirius_ms2_tolerance": {
+      "type": "number",
+      "minimum": 0,
+      "default": 5
+    },
+    "sirius_structure_expansive_search": {
+      "type": "string",
+      "enum": [
+        "OFF",
+        "EXACT",
+        "APPROXIMATE"
+      ],
+      "default": "OFF"
+    },
+    "sirius_recompute": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_qc_mz_tolerance_da": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.01
+    },
+    "is_qc_rt_tolerance_min": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.5
+    },
+    "is_qc_min_peak_height": {
+      "type": "number",
+      "minimum": 0,
+      "default": 1000
+    },
+    "is_qc_min_sample_pass_fraction": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.8,
+      "maximum": 1
+    },
+    "is_qc_min_target_pass_fraction": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.8,
+      "maximum": 1
+    },
+    "is_qc_max_qc_cv_percent": {
+      "type": "number",
+      "minimum": 0,
+      "default": 30
+    }
+  },
+  "additionalProperties": false
+}

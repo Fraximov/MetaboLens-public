@@ -1,0 +1,1242 @@
+---
+title: "MetaboLens QC report"
+format:
+  html:
+    toc: true
+    embed-resources: true
+    code-fold: true
+    code-summary: "Show calculation code"
+    code-tools: true
+theme:
+  light: flatly
+  dark: darkly
+params:
+  payload_path: null
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+payload <- readRDS(
+  params$payload_path
+)
+
+experiment <- payload$experiment
+
+normalization_summary <-
+  payload$normalization_summary
+
+feature_data <-
+  payload$feature_data
+
+sample_data <-
+  payload$sample_data
+
+assay_order <-
+  payload$assay_order
+
+sample_type <- tolower(
+  trimws(
+    as.character(
+      sample_data$sample_type
+    )
+  )
+)
+
+group_label <- trimws(
+  as.character(
+    sample_data$group_label
+  )
+)
+
+injection_order <- sample_data$injection_order
+
+batch_id <- as.character(sample_data$batch_id)
+
+feature_role <- tolower(
+  trimws(
+    as.character(
+      feature_data$feature_role
+    )
+  )
+)
+
+biological_sample <-
+  !is.na(sample_type) &
+  !is.na(group_label) &
+  nzchar(group_label) &
+  sample_type == "sample"
+
+qc_sample <-
+  !is.na(sample_type) &
+  sample_type == "qc"
+
+group_levels <- sort(
+  unique(
+    group_label[
+      biological_sample
+    ]
+  )
+)
+
+group_colours <- stats::setNames(
+  grDevices::hcl.colors(
+    length(group_levels),
+    "Dark 3"
+  ),
+  group_levels
+)
+
+sample_order <- which(
+  biological_sample
+)
+
+qc_order <- which(
+  qc_sample
+)
+
+sample_order <- sample_order[
+  order(
+    sample_data$injection_order[
+      sample_order
+    ]
+  )
+]
+
+qc_order <- qc_order[
+  order(
+    sample_data$injection_order[
+      qc_order
+    ]
+  )
+]
+
+ordered_groups <- group_label[
+  sample_order
+]
+
+analyte_feature <-
+  !is.na(feature_role) &
+  feature_role != "internal_standard"
+
+included_analyte <-
+  analyte_feature &
+  feature_data$effective_decision_statistics == "include"
+
+curation_metadata <-
+  S4Vectors::metadata(experiment)$curation
+
+curation_profile_name <-
+  curation_metadata$profile$name
+
+curation_assay_name <-
+  curation_metadata$assay_name
+
+curation_assay_label <- if (
+  curation_assay_name == "intensity"
+) {
+  "Raw"
+} else {
+  toupper(curation_assay_name)
+}
+
+curation_assay_display <- sprintf(
+  "%s (%s)",
+  curation_assay_name,
+  curation_assay_label
+)
+
+assay_labels <- ifelse(
+  assay_order == "intensity",
+  "Raw",
+  toupper(assay_order)
+)
+
+displayed_assays <- paste(
+  sprintf(
+    "%s (%s)",
+    assay_order,
+    assay_labels
+  ),
+  collapse = ", "
+)
+
+rla_feature_count <- sum(
+  included_analyte
+)
+
+rla_plot_title <- function(
+  assay_label,
+  rla_type
+) {
+  sprintf(
+    "%s — %s (%d analytes)",
+    assay_label,
+    rla_type,
+    rla_feature_count
+  )
+}
+
+```
+
+## Statistics-included features
+
+```{r}
+#| label: included-feature-table
+
+included_features <- feature_data[
+  included_analyte,
+  ,
+  drop = FALSE
+]
+
+display_columns <- intersect(
+  c(
+    "feature_id",
+    "feature_name",
+    "mz",
+    "rt_min",
+    "has_ms2",
+    "sample_detection_pct",
+    "qc_cv_pct",
+    "blank_to_sample_median_ratio",
+    "effective_decision_statistics",
+    "effective_decision_annotation"
+  ),
+  names(included_features)
+)
+
+DT::datatable(
+  included_features[
+    ,
+    display_columns,
+    drop = FALSE
+  ],
+  rownames = FALSE,
+  filter = "top",
+  options = list(
+    pageLength = 10,
+    lengthMenu = c(10, 25, 50, 100),
+    scrollX = TRUE
+  )
+) |>
+  DT::formatStyle(
+    columns = display_columns,
+    fontSize = "12px"
+  )
+```
+
+## Curation decision overview
+
+These counts cover analyte features only. Internal standards remain in the experiment for normalization traceability but are excluded from this summary, the included-feature table, and the RLA plots.
+
+```{r}
+#| label: curation-decision-overview
+
+decision_columns <- c(
+  "automatic_decision_statistics",
+  "operator_override_statistics",
+  "effective_decision_statistics",
+  "automatic_decision_annotation",
+  "operator_override_annotation",
+  "effective_decision_annotation"
+)
+
+decision_counts <- do.call(
+  rbind,
+  lapply(
+    decision_columns,
+    function(column_name) {
+      counts <- table(
+        feature_data[[column_name]][
+          analyte_feature
+        ],
+        useNA = "ifany"
+      )
+
+      data.frame(
+        decision_column = column_name,
+        value = names(counts),
+        feature_count = as.integer(counts),
+        row.names = NULL
+      )
+    }
+  )
+)
+
+knitr::kable(
+  decision_counts
+)
+```
+
+## Normalization overview
+
+```{r}
+knitr::kable(
+  normalization_summary
+)
+```
+
+## QC CV comparison across assays
+
+```{r}
+#| label: qc-cv-comparison
+
+qc_cv_by_assay <- lapply(
+  assay_order,
+  function(assay_name) {
+    values <- feature_data[[
+      paste0(
+        "qc_cv_pct::",
+        assay_name
+      )
+    ]]
+
+    values[
+      is.finite(values)
+    ]
+  }
+)
+
+names(qc_cv_by_assay) <- ifelse(
+  assay_order == "intensity",
+  "Raw",
+  toupper(assay_order)
+)
+
+qc_cv_by_assay <- qc_cv_by_assay[
+  lengths(qc_cv_by_assay) > 0L
+]
+
+if (length(qc_cv_by_assay) > 0L) {
+  boxplot(
+    qc_cv_by_assay,
+    outline = FALSE,
+    main = "QC CV by normalization method",
+    ylab = "QC CV (%)",
+    col = "#D9E6F2"
+  )
+
+  abline(
+    h = 20,
+    col = "#B2182B",
+    lty = 2
+  )
+} else {
+  cat(
+    "Not applicable: no usable QC CV values."
+  )
+}
+```
+
+## Assay diagnostics {.panel-tabset}
+
+```{r}
+#| label: assay-qc-cv
+#| results: asis
+for (assay_name in assay_order) {
+  assay_label <- if (
+    assay_name == "intensity"
+  ) {
+    "Raw"
+  } else {
+    toupper(assay_name)
+  }
+
+  cat("### ", assay_label, "\n\n", sep = "")
+
+  cat("#### QC CV distribution\n\n")
+
+  qc_cv_column <- paste0(
+    "qc_cv_pct::",
+    assay_name
+  )
+
+  observed_qc_cv <- feature_data[[qc_cv_column]]
+
+  observed_qc_cv <- observed_qc_cv[
+    is.finite(observed_qc_cv)
+  ]
+
+  if (length(observed_qc_cv) > 0L) {
+    hist(
+      observed_qc_cv,
+      breaks = 30,
+      main = paste(assay_label, "QC CV"),
+      xlab = "QC CV (%)"
+    )
+  } else {
+    cat(
+      "Not applicable: no usable QC CV values.\n\n"
+    )
+  }
+}
+```
+
+## Injection-order diagnostics
+::: {.callout-note}
+
+These plots use the same statistics-included analytes as the RLA diagnostics. Detection completeness is calculated from the raw intensity assay. Median signal is shown for every available assay. QC points are highlighted and connected only within their batch.
+:::
+
+```{r}
+#| label: injection-order-plot-helper
+#| include: false
+
+plot_injection_diagnostic <- function(
+  values,
+  main,
+  ylab,
+  ylim = NULL
+) {
+  usable <-
+    is.finite(injection_order) &
+    is.finite(values)
+
+  if (!any(usable)) {
+    return(
+      plotly::plot_ly(
+        height = 520
+      ) |>
+        plotly::layout(
+          title = list(text = main),
+          xaxis = list(visible = FALSE),
+          yaxis = list(visible = FALSE),
+          annotations = list(
+            list(
+              text = "No usable values",
+              x = 0.5,
+              y = 0.5,
+              xref = "paper",
+              yref = "paper",
+              showarrow = FALSE
+            )
+          )
+        ) |>
+        plotly::config(
+          displaylogo = FALSE
+        )
+    )
+  }
+
+  display_group <- rep(
+    "Other",
+    length(values)
+  )
+
+  display_group[biological_sample] <-
+    group_label[biological_sample]
+
+  display_group[qc_sample] <- "QC"
+
+  plot_data <- data.frame(
+    sample_name = as.character(
+      sample_data$sample_name
+    ),
+    sample_type = as.character(
+      sample_data$sample_type
+    ),
+    group_label = group_label,
+    batch_id = batch_id,
+    injection_order = injection_order,
+    value = as.numeric(values),
+    display_group = display_group,
+    stringsAsFactors = FALSE
+  )
+
+  plot_data <- plot_data[
+    usable,
+    ,
+    drop = FALSE
+  ]
+
+  plot_data$hover_text <- paste0(
+    "Sample: ", plot_data$sample_name,
+    "<br>Type: ", plot_data$sample_type,
+    "<br>Group: ", plot_data$group_label,
+    "<br>Batch: ", plot_data$batch_id,
+    "<br>Injection order: ",
+    plot_data$injection_order,
+    "<br>Metric: ", main,
+    "<br>Value: ",
+    format(
+      signif(plot_data$value, 4),
+      trim = TRUE
+    )
+  )
+
+  displayed_groups <- group_levels[
+    group_levels %in%
+      plot_data$display_group
+  ]
+
+  display_levels <- c(
+    displayed_groups,
+    intersect(
+      c("QC", "Other"),
+      plot_data$display_group
+    )
+  )
+
+  plot_data$display_group <- factor(
+    plot_data$display_group,
+    levels = display_levels
+  )
+
+  plot_colours <- c(
+    group_colours[displayed_groups],
+    QC = "#4D4D4D",
+    Other = "grey70"
+  )[
+    display_levels
+  ]
+
+  plot <- plotly::plot_ly(
+    data = plot_data,
+    x = ~injection_order,
+    y = ~value,
+    color = ~display_group,
+    colors = plot_colours,
+    type = "scatter",
+    mode = "markers",
+    marker = list(size = 11),
+    text = ~hover_text,
+    hoverinfo = "text",
+    height = 520
+  )
+
+  qc_batches <- unique(
+    plot_data$batch_id[
+      plot_data$display_group == "QC" &
+        !is.na(plot_data$batch_id)
+    ]
+  )
+
+  for (batch_name in qc_batches) {
+    batch_qc <- plot_data[
+      plot_data$display_group == "QC" &
+        !is.na(plot_data$batch_id) &
+        plot_data$batch_id == batch_name,
+      ,
+      drop = FALSE
+    ]
+
+    batch_qc <- batch_qc[
+      order(
+        batch_qc$injection_order
+      ),
+      ,
+      drop = FALSE
+    ]
+
+    plot <- plotly::add_lines(
+      plot,
+      data = batch_qc,
+      x = ~injection_order,
+      y = ~value,
+      name = paste("QC batch", batch_name),
+      line = list(
+        color = "#4D4D4D",
+        width = 2
+      ),
+      hoverinfo = "skip",
+      showlegend = FALSE,
+      inherit = FALSE
+    )
+  }
+
+  yaxis <- list(title = ylab)
+
+  if (!is.null(ylim)) {
+    yaxis$range <- ylim
+  }
+
+  plot |>
+    plotly::layout(
+      title = list(text = main),
+      xaxis = list(title = "Injection order"),
+      yaxis = yaxis,
+      hovermode = "closest",
+      legend = list(orientation = "h")
+    ) |>
+    plotly::config(
+      displaylogo = FALSE,
+      responsive = TRUE
+    )
+}
+```
+
+### Detection completeness
+
+```{r}
+#| label: injection-order-detection
+#| fig-width: 14
+#| fig-height: 5.5
+#| out-width: 100%
+
+raw_analyte_values <- SummarizedExperiment::assay(
+  experiment,
+  "intensity"
+)[
+  included_analyte,
+  ,
+  drop = FALSE
+]
+
+if (nrow(raw_analyte_values) == 0L) {
+  detection_pct <- rep(
+    NA_real_,
+    ncol(experiment)
+  )
+} else {
+  detection_pct <- 100 * colMeans(
+    is.finite(raw_analyte_values) &
+      raw_analyte_values > 0
+  )
+}
+
+plot_injection_diagnostic(
+  detection_pct,
+  sprintf(
+    "Raw detection completeness (%d analytes)",
+    sum(included_analyte)
+  ),
+  "Detected analytes (%)",
+  ylim = c(0, 100)
+)
+
+```
+
+### Median signal by assay
+
+```{r}
+#| label: injection-order-median-signal
+#| fig-width: 14
+#| fig-height: 5.5
+#| out-width: 100%
+
+signal_plots <- lapply(
+  seq_along(assay_order),
+  function(assay_index) {
+  assay_values <- SummarizedExperiment::assay(
+    experiment,
+    assay_order[assay_index]
+  )[
+    included_analyte,
+    ,
+    drop = FALSE
+  ]
+
+  assay_values[
+    !is.finite(assay_values) |
+      assay_values <= 0
+  ] <- NA_real_
+
+  if (nrow(assay_values) == 0L) {
+    median_log2_signal <- rep(
+      NA_real_,
+      ncol(experiment)
+    )
+  } else {
+    median_log2_signal <- apply(
+      log2(assay_values),
+      2L,
+      stats::median,
+      na.rm = TRUE
+    )
+
+    median_log2_signal[
+      !is.finite(median_log2_signal)
+    ] <- NA_real_
+  }
+
+  plot_injection_diagnostic(
+    median_log2_signal,
+    paste(
+      assay_labels[assay_index],
+      "— median signal"
+    ),
+    "Median log2 intensity"
+  )
+  }
+)
+
+htmltools::tagList(signal_plots)
+
+```
+## RLA diagnostics
+
+::: {.callout-note}
+## RLA calculation scope
+
+- **Curation source:** profile `r curation_profile_name`, evaluated on `r curation_assay_display`.
+- **Shared feature filter:** effective statistics decision is `include` after operator overrides, and feature role is `analyte` (`r rla_feature_count` features). The same finalized feature set is used for every panel.
+- **Assay values displayed:** `r displayed_assays`. Only the intensity assay changes between panels; the feature filter does not.
+- **RLA references:** across-group RLA uses the per-feature median across all biological samples; QC-only RLA uses the per-feature QC median; within-group RLA uses a separate per-feature median inside each biological group.
+:::
+
+<script>
+window.addEventListener("load", () => {
+  const tabContent = document.querySelector(
+    "#within-group-rla-comparison .tab-content"
+  );
+
+  if (!tabContent) {
+    return;
+  }
+
+  const retainCurrentHeight = () => {
+    const activePane = tabContent.querySelector(
+      ".tab-pane.active"
+    );
+
+    if (!activePane) {
+      return;
+    }
+
+    const retainedHeight =
+      Number.parseFloat(tabContent.style.minHeight) || 0;
+
+    tabContent.style.minHeight = `${Math.max(
+      retainedHeight,
+      activePane.getBoundingClientRect().height
+    )}px`;
+  };
+
+  retainCurrentHeight();
+
+  tabContent
+    .closest(".panel-tabset")
+    .addEventListener("show.bs.tab", retainCurrentHeight);
+});
+</script>
+
+### Across-group RLA comparison
+
+::: {.panel-tabset}
+
+#### Biological samples
+
+```{r}
+#| label: across-group-rla-comparison
+#| fig-width: 14
+#| fig-height: 5.5
+#| out-width: 100%
+
+old_par <- par(
+  no.readonly = TRUE
+)
+
+par(
+  mfrow = c(1L, 1L),
+  mar = c(4.5, 4, 3, 1)
+)
+
+for (assay_index in seq_along(assay_order)) {
+  assay_name <- assay_order[
+    assay_index
+  ]
+
+  assay_values <- SummarizedExperiment::assay(
+    experiment,
+    assay_name
+  )[
+    included_analyte,
+    ,
+    drop = FALSE
+  ]
+
+  if (
+    length(sample_order) < 2L ||
+      nrow(assay_values) == 0L
+  ) {
+    plot.new()
+
+    title(
+      main = rla_plot_title(
+        assay_labels[assay_index],
+        "across-group RLA"
+      )
+    )
+
+    text(
+      0.5,
+      0.5,
+      "At least two biological samples are required"
+    )
+  } else {
+    values <- assay_values[
+      ,
+      sample_order,
+      drop = FALSE
+    ]
+
+    values[
+      !is.finite(values) |
+        values <= 0
+    ] <- NA_real_
+
+    log_values <- log2(values)
+
+    feature_medians <- apply(
+      log_values,
+      1L,
+      stats::median,
+      na.rm = TRUE
+    )
+
+    usable_features <- is.finite(
+      feature_medians
+    )
+
+    if (!any(usable_features)) {
+      plot.new()
+
+      title(
+        main = rla_plot_title(
+          assay_labels[assay_index],
+          "across-group RLA"
+        )
+      )
+
+      text(
+        0.5,
+        0.5,
+        "No usable positive intensities"
+      )
+    } else {
+      rla <- sweep(
+        log_values[
+          usable_features,
+          ,
+          drop = FALSE
+        ],
+        1L,
+        feature_medians[
+          usable_features
+        ],
+        FUN = "-"
+      )
+
+      boxplot(
+        as.data.frame(rla),
+        names = injection_order[
+          sample_order
+        ],
+        col = group_colours[
+          ordered_groups
+        ],
+        outline = FALSE,
+        ylim = c(-2, 2),
+        las = 2,
+        cex.axis = 0.7,
+        main = rla_plot_title(
+          assay_labels[assay_index],
+          "across-group RLA"
+        ),
+        xlab = "Injection order",
+        ylab = "Relative log2 abundance"
+      )
+
+      abline(
+        h = 0,
+        col = "grey40",
+        lty = 2
+      )
+
+      legend(
+        "topright",
+        legend = group_levels,
+        fill = group_colours,
+        bty = "n",
+        cex = 0.7
+      )
+    }
+  }
+}
+
+par(old_par)
+
+```
+
+#### QC-only RLA comparison
+
+```{r}
+#| label: across-group-qc-rla
+#| fig-width: 14
+#| fig-height: 5.5
+#| out-width: 100%
+
+plot_qc_rla <- function(assay_index) {
+  assay_name <- assay_order[
+    assay_index
+  ]
+
+  assay_values <- SummarizedExperiment::assay(
+    experiment,
+    assay_name
+  )[
+    included_analyte,
+    ,
+    drop = FALSE
+  ]
+
+  if (
+    length(qc_order) < 3L ||
+      nrow(assay_values) == 0L
+  ) {
+    plot.new()
+
+    title(
+      main = rla_plot_title(
+        assay_labels[assay_index],
+        "QC-only RLA"
+      )
+    )
+
+    text(
+      0.5,
+      0.5,
+      "At least three QC injections are required"
+    )
+
+    return(invisible(NULL))
+  }
+
+  values_qc <- assay_values[
+    ,
+    qc_order,
+    drop = FALSE
+  ]
+
+  values_qc[
+    !is.finite(values_qc) |
+      values_qc <= 0
+  ] <- NA_real_
+
+  log_values_qc <- log2(values_qc)
+
+  feature_medians_qc <- apply(
+    log_values_qc,
+    1L,
+    stats::median,
+    na.rm = TRUE
+  )
+
+  usable_features_qc <- is.finite(
+    feature_medians_qc
+  )
+
+  if (!any(usable_features_qc)) {
+    plot.new()
+
+    title(
+      main = rla_plot_title(
+        assay_labels[assay_index],
+        "QC-only RLA"
+      )
+    )
+
+    text(
+      0.5,
+      0.5,
+      "No usable positive intensities"
+    )
+
+    return(invisible(NULL))
+  }
+
+  rla_qc <- sweep(
+    log_values_qc[
+      usable_features_qc,
+      ,
+      drop = FALSE
+    ],
+    1L,
+    feature_medians_qc[
+      usable_features_qc
+    ],
+    FUN = "-"
+  )
+
+  boxplot(
+    as.data.frame(rla_qc),
+    names = injection_order[
+      qc_order
+    ],
+    col = "#4D4D4D",
+    outline = FALSE,
+    ylim = c(-2, 2),
+    las = 2,
+    cex.axis = 0.7,
+    main = rla_plot_title(
+      assay_labels[assay_index],
+      "QC-only RLA"
+    ),
+    xlab = "Injection order",
+    ylab = "Relative log2 abundance"
+  )
+
+  abline(
+    h = 0,
+    col = "grey40",
+    lty = 2
+  )
+
+  invisible(NULL)
+}
+
+old_par <- par(
+  no.readonly = TRUE
+)
+
+par(
+  mfrow = c(1L, 1L),
+  mar = c(4.5, 4, 3, 1)
+)
+
+for (assay_index in seq_along(assay_order)) {
+  plot_qc_rla(assay_index)
+}
+
+par(old_par)
+```
+
+:::
+
+### Within-group RLA comparison
+
+::: {.panel-tabset}
+
+#### Biological samples
+
+```{r}
+#| label: within-group-rla-comparison
+#| fig-width: 14
+#| fig-height: 5.5
+#| out-width: 100%
+
+eligible_groups <- group_levels[
+  vapply(
+    group_levels,
+    function(group_name) {
+      sum(ordered_groups == group_name) >= 2L
+    },
+    logical(1)
+  )
+]
+
+old_par <- par(
+  no.readonly = TRUE
+)
+
+par(
+  mfrow = c(1L, 1L),
+  mar = c(4.5, 4, 3, 1)
+)
+
+for (assay_index in seq_along(assay_order)) {
+  assay_name <- assay_order[
+    assay_index
+  ]
+
+  assay_values <- SummarizedExperiment::assay(
+    experiment,
+    assay_name
+  )[
+    included_analyte,
+    ,
+    drop = FALSE
+  ]
+
+  if (
+    length(eligible_groups) == 0L ||
+      nrow(assay_values) == 0L
+  ) {
+    plot.new()
+
+    title(
+      main = rla_plot_title(
+        assay_labels[assay_index],
+        "within-group RLA"
+      )
+    )
+
+    text(
+      0.5,
+      0.5,
+      "At least one group with two samples is required"
+    )
+
+    next
+  }
+
+  values <- assay_values[
+    ,
+    sample_order,
+    drop = FALSE
+  ]
+
+  values[
+    !is.finite(values) |
+      values <= 0
+  ] <- NA_real_
+
+  log_values <- log2(values)
+
+  within_group_rla <- matrix(
+    NA_real_,
+    nrow = nrow(log_values),
+    ncol = ncol(log_values),
+    dimnames = dimnames(log_values)
+  )
+
+  for (group_name in eligible_groups) {
+    group_columns <- which(
+      ordered_groups == group_name
+    )
+
+    group_values <- log_values[
+      ,
+      group_columns,
+      drop = FALSE
+    ]
+
+    group_medians <- apply(
+      group_values,
+      1L,
+      stats::median,
+      na.rm = TRUE
+    )
+
+    usable_features <- is.finite(
+      group_medians
+    )
+
+    within_group_rla[
+      usable_features,
+      group_columns
+    ] <- sweep(
+      group_values[
+        usable_features,
+        ,
+        drop = FALSE
+      ],
+      1L,
+      group_medians[
+        usable_features
+      ],
+      FUN = "-"
+    )
+  }
+
+  usable_samples <-
+    ordered_groups %in% eligible_groups &
+    colSums(
+      is.finite(within_group_rla)
+    ) > 0L
+
+  if (!any(usable_samples)) {
+    plot.new()
+
+    title(
+      main = rla_plot_title(
+        assay_labels[assay_index],
+        "within-group RLA"
+      )
+    )
+
+    text(
+      0.5,
+      0.5,
+      "No usable positive intensities"
+    )
+
+    next
+  }
+
+  displayed_groups <- ordered_groups[
+    usable_samples
+  ]
+
+  boxplot(
+    as.data.frame(
+      within_group_rla[
+        ,
+        usable_samples,
+        drop = FALSE
+      ]
+    ),
+    names = injection_order[
+      sample_order[
+        usable_samples
+      ]
+    ],
+    col = group_colours[
+      displayed_groups
+    ],
+    outline = FALSE,
+    ylim = c(-2, 2),
+    las = 2,
+    cex.axis = 0.7,
+    main = rla_plot_title(
+      assay_labels[assay_index],
+      "within-group RLA"
+    ),
+    xlab = "Injection order",
+    ylab = "Relative log2 abundance"
+  )
+
+  abline(
+    h = 0,
+    col = "grey40",
+    lty = 2
+  )
+
+  displayed_group_levels <- group_levels[
+    group_levels %in% displayed_groups
+  ]
+
+  legend(
+    "topright",
+    legend = displayed_group_levels,
+    fill = group_colours[
+      displayed_group_levels
+    ],
+    bty = "n",
+    cex = 0.7
+  )
+}
+
+par(old_par)
+
+```
+
+#### QC-only RLA comparison
+
+The QC-only calculation is identical to the QC tab above and is repeated here to keep the two RLA sections visually symmetric.
+
+```{r}
+#| label: within-group-qc-rla
+#| fig-width: 14
+#| fig-height: 5.5
+#| out-width: 100%
+
+old_par <- par(
+  no.readonly = TRUE
+)
+
+par(
+  mfrow = c(1L, 1L),
+  mar = c(4.5, 4, 3, 1)
+)
+
+for (assay_index in seq_along(assay_order)) {
+  plot_qc_rla(assay_index)
+}
+
+par(old_par)
+```
+
+:::

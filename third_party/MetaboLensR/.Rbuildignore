@@ -1,0 +1,7 @@
+^LICENSE\.md$
+^\.git$
+^private-data$
+^private-analysis$
+^docs$
+^\.DS_Store$
+^\.vscode$

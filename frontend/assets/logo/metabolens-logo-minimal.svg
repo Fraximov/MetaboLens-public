@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="448" height="80" viewBox="0 0 448 80" role="img" aria-labelledby="title desc">
+  <title id="title">MetaboLens</title>
+  <desc id="desc">A navy lens with six green data trails beside the MetaboLens wordmark.</desc>
+  <g fill="#123e63">
+    <path d="M12 28H9C1 28 1 52 9 52h3c-5-6-5-18 0-24Z"/>
+    <path d="M18 23h16c-6 9-6 25 0 34H18c-9 0-9-34 0-34Z"/>
+    <path d="M42 17h17a40 40 0 0 0 0 46H42c-13 0-13-46 0-46Z"/>
+    <circle cx="90" cy="40" r="25"/>
+  </g>
+  <circle cx="90" cy="40" r="32" fill="none" stroke="#59b895" stroke-width="4"/>
+  <g fill="none" stroke="#86dbb7" stroke-width="1.8" stroke-linecap="round">
+    <path d="M90 20c20 0 24 23 5 25"/>
+    <path d="M90 20c20 0 24 23 5 25" transform="rotate(60 90 40)"/>
+    <path d="M90 20c20 0 24 23 5 25" transform="rotate(120 90 40)"/>
+    <path d="M90 20c20 0 24 23 5 25" transform="rotate(180 90 40)"/>
+    <path d="M90 20c20 0 24 23 5 25" transform="rotate(240 90 40)"/>
+    <path d="M90 20c20 0 24 23 5 25" transform="rotate(300 90 40)"/>
+  </g>
+  <g fill="#fff">
+    <circle cx="90" cy="20" r="2"/>
+    <circle cx="107.32" cy="30" r="2"/>
+    <circle cx="107.32" cy="50" r="2"/>
+    <circle cx="90" cy="60" r="2"/>
+    <circle cx="72.68" cy="50" r="2"/>
+    <circle cx="72.68" cy="30" r="2"/>
+    <circle cx="90" cy="40" r="5"/>
+  </g>
+  <text x="140" y="54" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="700" letter-spacing="-1.5" fill="#123e63">Metabo<tspan fill="#389975">Lens</tspan></text>
+</svg>

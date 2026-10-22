@@ -1,0 +1,70 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+env:
+  COMPOSE: docker compose --env-file .env -p metabolens-public-ci -f infra/compose/docker-compose.yml
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - run: python3 scripts/check_release.py
+      - run: python3 -m unittest discover -s tests -v
+      - run: python3 scripts/check_context_docs.py
+      - run: node frontend/tests/test_eic_search.js
+  services:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        service: [backend, frontend, worker]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Prepare private CI configuration
+        run: python3 scripts/configure_local.py --email ci@example.org
+      - name: Build isolated service
+        run: $COMPOSE build ${{ matrix.service }}
+      - name: Backend tests
+        if: matrix.service == 'backend'
+        run: >-
+          docker run --rm --network none
+          -v "$PWD:/app:ro" -w /app/backend
+          -e PYTHONPATH=/app/backend:/app -e PYTHONDONTWRITEBYTECODE=1
+          -e APP_ENV=dev -e AUTO_SEED=true
+          -e APP_SECRET_KEY=ci-only-not-a-deployment-secret-00000000
+          -e WORKFLOW_PIPELINE_ROOT=/app/workflows/nextflow4ms-dial-msdial5-clean
+          metabolens-public-backend:latest python -m pytest -q -p no:cacheprovider tests
+      - name: Frontend tests
+        if: matrix.service == 'frontend'
+        run: >-
+          docker run --rm --network none
+          -v "$PWD/frontend:/app:ro" -v "$PWD/workflows:/workflows:ro"
+          -e PYTHONDONTWRITEBYTECODE=1 metabolens-public-frontend:latest
+          python -m pytest -q -p no:cacheprovider tests
+      - name: Worker tests
+        if: matrix.service == 'worker'
+        run: >-
+          docker run --rm --network none -v "$PWD:/app:ro"
+          -e PYTHONPATH=/app/backend:/app/worker -e PYTHONDONTWRITEBYTECODE=1
+          -e APP_ENV=dev -e AUTO_SEED=true
+          -e APP_SECRET_KEY=ci-only-not-a-deployment-secret-00000000
+          metabolens-public-worker:latest python -m unittest discover -s /app/worker/tests -v
+      - name: Start disposable PostgreSQL
+        if: matrix.service == 'backend'
+        run: $COMPOSE up -d --wait db
+      - name: Check migrations
+        if: matrix.service == 'backend'
+        run: $COMPOSE run --rm --no-deps backend alembic upgrade head
+      - name: Remove disposable CI services and data
+        if: always() && matrix.service == 'backend'
+        run: $COMPOSE down -v

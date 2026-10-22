@@ -1,0 +1,984 @@
+/* Light shell prototype.
+
+   Loaded last (Dash serves assets alphabetically), so it restyles the shared
+   classes in embl_theme.css and nextflow_studio.css without editing them.
+   Deleting this file restores the previous look.
+
+   The EMBL palette is kept as it is: the green banner, #007b53 and #18974c
+   for brand and active states, and EMBL gray #707372 for secondary text. What
+   changes is structure, after documentation sites such as ghostty.org/docs:
+   hairline dividers instead of cards and shadows, a plain navigation list,
+   lighter type, more whitespace, and short transitions so every hover and
+   selection answers at once. */
+
+:root {
+  /* Neutrals built around EMBL gray (#707372); greens are the EMBL ones
+     already used in embl_theme.css. */
+  --ml-gray-0: #ffffff;
+  --ml-gray-1: #f8f9fa;
+  --ml-gray-2: #f0f2f1;
+  --ml-gray-3: #e1e5e3;
+  --ml-gray-4: #c6cbc9;
+  --ml-gray-5: #8b8f8e;
+  --ml-gray-6: #707372;
+  --ml-gray-7: #3f4342;
+  --ml-gray-8: #2a2e2d;
+  --ml-gray-9: #15302b;
+  --ml-brand: #007b53;
+  --ml-brand-active: #18974c;
+  --ml-brand-soft: #e7f5ed;
+  /* Signal colours chosen for text contrast on white: danger 6.6:1,
+     warning 6.1:1 (Flatly's are 3.8:1 and 2.2:1). */
+  --ml-danger: #b42318;
+  --ml-danger-soft: #fdf1f0;
+  --ml-warning: #93510b;
+  --ml-warning-soft: #fff7e8;
+  --ml-radius: 6px;
+  --ml-ease: 120ms ease-out;
+  --ml-font: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI",
+    Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ml-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --bs-body-font-family: var(--ml-font);
+  --bs-body-font-size: 0.9375rem;
+  --bs-body-color: var(--ml-gray-7);
+  --bs-body-bg: var(--ml-gray-0);
+  --bs-border-color: var(--ml-gray-3);
+  --bs-border-radius: var(--ml-radius);
+  --bs-primary: var(--ml-brand);
+  --bs-primary-rgb: 0, 123, 83;
+  --bs-link-color: var(--ml-brand);
+  --bs-link-hover-color: var(--ml-brand-active);
+  --bs-secondary-color: var(--ml-gray-6);
+  --bs-emphasis-color: var(--ml-gray-9);
+  --bs-danger: var(--ml-danger);
+  --bs-danger-rgb: 180, 35, 24;
+  --bs-danger-text-emphasis: var(--ml-danger);
+  --bs-form-invalid-color: var(--ml-danger);
+  --bs-form-invalid-border-color: var(--ml-danger);
+
+  --nf-bg: var(--ml-gray-1);
+  --nf-text: var(--ml-gray-9);
+  --nf-muted: var(--ml-gray-6);
+  --nf-border: var(--ml-gray-3);
+  --nf-radius: var(--ml-radius);
+  --nf-shadow: none;
+}
+
+body {
+  background-color: var(--ml-gray-0);
+  color: var(--ml-gray-7);
+  font-family: var(--ml-font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  color: var(--ml-gray-9);
+  font-family: var(--ml-font);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+code, pre, kbd, .font-monospace {
+  font-family: var(--ml-mono);
+}
+
+.text-muted {
+  color: var(--ml-gray-6) !important;
+}
+
+/* Top bar: the EMBL green banner stays; it only gets slimmer and sticky. */
+
+.embl-navbar {
+  min-height: 58px;
+  padding-block: 6px;
+  position: sticky;
+  top: 0;
+}
+
+.metabolens-facility-name {
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  opacity: 0.92;
+  padding-left: 0.9rem;
+}
+
+.navbar-session-trigger {
+  font-weight: 500;
+  transition: background-color var(--ml-ease), border-color var(--ml-ease);
+}
+
+.navbar-session-menu {
+  border-color: var(--ml-gray-3);
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(21, 48, 43, 0.1);
+}
+
+/* Sidebar: a plain navigation tree. The card around it disappears and a
+   hairline separates it from the content. */
+
+.sidebar-column {
+  border-right: 1px solid var(--ml-gray-3);
+  min-height: calc(100vh - 58px);
+  top: 58px;
+}
+
+.sidebar-wrap.metabo-card,
+.sidebar-wrap {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  max-height: calc(100vh - 58px - 1.5rem);
+}
+
+.sidebar-wrap > .card-body {
+  padding: 0 0.25rem 1rem 0;
+}
+
+.sidebar-nav .nav-link {
+  border-radius: var(--ml-radius);
+  color: var(--ml-gray-6);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 2px;
+  padding: 0.55rem 0.65rem;
+  transition: background-color var(--ml-ease), color var(--ml-ease);
+}
+
+.sidebar-nav .nav-link:hover {
+  background-color: var(--ml-gray-2);
+  color: var(--ml-gray-9);
+}
+
+.sidebar-nav .nav-link.active {
+  background-color: var(--ml-brand-active) !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+.sidebar-wrap hr {
+  border-color: var(--ml-gray-3);
+  opacity: 1;
+}
+
+.sidebar-context-title {
+  color: var(--ml-brand);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.jw-job-link {
+  border-radius: var(--ml-radius);
+  transition: background-color var(--ml-ease), color var(--ml-ease);
+}
+
+/* Content: generous whitespace and a readable measure for prose. */
+
+.main-content {
+  padding: 2rem 2.25rem 3rem;
+}
+
+.page-intro {
+  border-bottom: 1px solid var(--ml-gray-3);
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+}
+
+.page-intro-eyebrow,
+.section-eyebrow {
+  color: var(--ml-brand);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.page-intro-title {
+  color: var(--ml-gray-9);
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.page-intro-description,
+.section-helper,
+.page-context-helper {
+  color: var(--ml-gray-6);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.page-intro-description {
+  font-size: 1rem;
+  max-width: 68ch;
+}
+
+.section-heading,
+.subsection-title {
+  color: var(--ml-gray-9);
+  font-weight: 600;
+}
+
+.section-title {
+  color: var(--ml-brand);
+  font-weight: 600;
+}
+
+.section-heading {
+  font-size: 1.125rem;
+}
+
+/* A heading or label with more on hover: a quiet dotted underline. */
+.has-hint {
+  text-decoration: underline dotted var(--ml-gray-4);
+  text-underline-offset: 0.25em;
+  cursor: help;
+}
+
+/* Icons: small stroke SVGs in assets/icons, painted in the current text
+   colour through a mask, so they follow link and hover colours. */
+.ml-icon {
+  display: inline-block;
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: -0.18em;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.ml-icon-package { -webkit-mask-image: url("icons/package.svg"); mask-image: url("icons/package.svg"); }
+.ml-icon-download { -webkit-mask-image: url("icons/download.svg"); mask-image: url("icons/download.svg"); }
+.ml-icon-export { -webkit-mask-image: url("icons/export.svg"); mask-image: url("icons/export.svg"); }
+.ml-icon-files { -webkit-mask-image: url("icons/files.svg"); mask-image: url("icons/files.svg"); }
+
+.icon-action.is-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* A borderless square action that names itself on hover (title). */
+.icon-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--ml-radius);
+  background: transparent;
+  color: var(--ml-gray-6);
+  text-decoration: none;
+  transition: color var(--ml-ease), border-color var(--ml-ease), background-color var(--ml-ease);
+}
+
+.icon-action:hover,
+.icon-action:focus-visible {
+  color: var(--ml-brand);
+  border-color: var(--ml-gray-3);
+  background-color: var(--ml-brand-soft);
+}
+
+.icon-action:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Package files: the submission folder as `tree` prints it, one grid row
+   per entry so kind, size and findings line up. */
+.pkg-tree {
+  font-family: var(--ml-mono);
+  font-size: 0.8125rem;
+  border-top: 1px solid var(--ml-gray-3);
+  border-bottom: 1px solid var(--ml-gray-3);
+  padding: 0.4rem 0;
+}
+
+.pkg-tree-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 7rem 4.75rem 7.5rem;
+  gap: 0 0.75rem;
+  align-items: baseline;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  transition: background-color var(--ml-ease);
+}
+
+.pkg-tree-row:hover {
+  background-color: var(--ml-gray-1);
+}
+
+.pkg-tree-row.is-selected {
+  background-color: var(--ml-brand-soft);
+}
+
+.pkg-tree-glyph {
+  color: var(--ml-gray-4);
+  white-space: pre;
+}
+
+.pkg-tree-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pkg-tree-kind,
+.pkg-tree-size {
+  color: var(--ml-gray-6);
+}
+
+.pkg-tree-size,
+.pkg-tree-mark {
+  text-align: right;
+}
+
+.pkg-tree-dir > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.pkg-tree-dir > summary::-webkit-details-marker {
+  display: none;
+}
+
+.pkg-tree-dir > summary .pkg-tree-kind::after {
+  content: " \25B8";
+}
+
+.pkg-tree-dir[open] > summary .pkg-tree-kind::after {
+  content: " \25BE";
+}
+
+/* The selected file's findings beside the tree: two short lines each, the
+   whole message on hover, scrolling past the tree's height. */
+.pkg-panel {
+  height: 100%;
+  border-top: 1px solid var(--ml-gray-3);
+  border-bottom: 1px solid var(--ml-gray-3);
+  padding: 0.4rem 0;
+}
+
+.pkg-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.15rem 0.5rem 0.35rem;
+  font-family: var(--ml-mono);
+  font-size: 0.8125rem;
+  color: var(--ml-gray-6);
+}
+
+.pkg-findings {
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+.pkg-finding {
+  display: grid;
+  grid-template-columns: 0.5rem minmax(0, 1fr);
+  gap: 0 0.5rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  cursor: default;
+  transition: background-color var(--ml-ease);
+}
+
+.pkg-finding:hover {
+  background-color: var(--ml-gray-1);
+}
+
+.pkg-finding-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: 0.45rem;
+  border-radius: 50%;
+}
+
+.pkg-finding-message,
+.pkg-finding-meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pkg-finding-message {
+  font-size: 0.8125rem;
+  color: var(--ml-gray-8);
+}
+
+.pkg-finding-meta {
+  font-family: var(--ml-mono);
+  font-size: 0.72rem;
+  color: var(--ml-gray-5);
+}
+
+.pkg-finding-none {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--ml-gray-6);
+}
+
+.pkg-isa-section {
+  font-family: var(--ml-mono);
+  font-size: 0.75rem;
+  color: var(--ml-gray-6);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+/* Cards become flat panels: a hairline and a small radius, no shadow. */
+
+.metabo-card,
+.card {
+  background: var(--ml-gray-0);
+  border: 1px solid var(--ml-gray-3);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.quiet-card {
+  background: var(--ml-gray-1);
+}
+
+/* A card inside a card is a group, not another surface: it becomes a tinted
+   block without its own border, so pages read as sections rather than boxes
+   stacked inside boxes. A third level returns to white with a hairline. */
+
+.card .card,
+.metabo-card .metabo-card {
+  background: var(--ml-gray-1);
+  border-color: transparent;
+}
+
+.card .card .card,
+.card .card .page-context-card {
+  background: var(--ml-gray-0);
+  border-color: var(--ml-gray-3);
+}
+
+.page-context-card {
+  background: var(--ml-gray-1);
+  border-color: var(--ml-gray-3);
+  border-radius: 8px;
+}
+
+.page-context-label,
+.selection-reminder-label {
+  color: var(--ml-gray-5);
+  font-weight: 600;
+}
+
+.page-context-line {
+  color: var(--ml-gray-9);
+  font-weight: 600;
+}
+
+.page-context-chip,
+.selection-reminder-chip {
+  background: var(--ml-gray-2);
+  border: 1px solid var(--ml-gray-3);
+  color: var(--ml-gray-7);
+  font-weight: 500;
+}
+
+.status-box {
+  background: var(--ml-gray-1);
+  border-color: var(--ml-gray-3);
+}
+
+.dashboard-metric-card,
+.upload-surface {
+  border-color: var(--ml-gray-3);
+  box-shadow: none;
+}
+
+.dashboard-metric-value {
+  color: var(--ml-gray-9);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Terminal details. One rule decides the type: prose is sans-serif, while
+   machine facts (states, identifiers, counts, timestamps, column names, log
+   lines) are monospace. That split, not decoration, is what gives
+   documentation sites like ghostty.org their unix feel. */
+
+/* Status: one look for every badge in the app. A coloured dot and a
+   lowercase monospace label on a faint tint of the same colour, the way a
+   shell prints `● running`. Colours still come from their owners:
+   STATE_COLOR_MAP via --state-color, the nf-run-status classes, and the
+   Bootstrap colour names the job workspace uses. Live states pulse. */
+
+.state-pill,
+.nf-run-status,
+.badge {
+  --status-color: var(--state-color, var(--nf-run-status-color, var(--ml-gray-6)));
+  align-items: center;
+  background: color-mix(in srgb, var(--status-color) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--status-color) 22%, transparent);
+  border-radius: 4px;
+  color: var(--status-color);
+  display: inline-flex;
+  font-family: var(--ml-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.4rem;
+  letter-spacing: 0;
+  line-height: 1;
+  padding: 0.28rem 0.45rem;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+.state-pill::before,
+.nf-run-status::before,
+.badge::before {
+  background: currentColor;
+  border-radius: 50%;
+  content: "";
+  flex: 0 0 6px;
+  height: 6px;
+  width: 6px;
+}
+
+.state-pill[data-state="processing"]::before,
+.state-pill[data-state="running"]::before,
+.nf-run-status-running::before,
+.nf-run-status-processing::before,
+.badge.bg-info::before {
+  animation: ml-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes ml-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* Bootstrap badges carry their colour as a bg-* class with !important. */
+.badge.bg-success { --status-color: var(--ml-brand); background: color-mix(in srgb, var(--ml-brand) 8%, transparent) !important; }
+.badge.bg-danger { --status-color: var(--ml-danger); background: var(--ml-danger-soft) !important; }
+.badge.bg-warning { --status-color: var(--ml-warning); background: var(--ml-warning-soft) !important; }
+.badge.bg-info,
+.badge.bg-primary { --status-color: #193f90; background: #eef5ff !important; }
+.badge.bg-secondary,
+.badge.bg-light,
+.badge.bg-dark { --status-color: var(--ml-gray-6); background: var(--ml-gray-1) !important; color: var(--ml-gray-6) !important; }
+
+/* Tables: rules between rows only, like `ls -l` output. No zebra stripes, no
+   vertical grid, no outer frame; a faint hover marks the row under the
+   pointer. Column names are small lowercase monospace, and numbers line up. */
+
+.embl-table,
+.table {
+  --bs-table-striped-bg: transparent;
+  --bs-table-hover-bg: var(--ml-gray-1);
+  --bs-table-bg: transparent;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0;
+}
+
+.table-bordered > :not(caption) > * {
+  border-width: 0;
+}
+
+.table-bordered > :not(caption) > * > * {
+  border-width: 0;
+}
+
+.embl-table thead th,
+.table thead th {
+  background: transparent;
+  border-bottom: 1px solid var(--ml-gray-4) !important;
+  color: var(--ml-gray-5);
+  font-family: var(--ml-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  padding-block: 0.5rem;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+.embl-table tbody td,
+.table tbody td {
+  border-bottom: 1px solid var(--ml-gray-2) !important;
+  padding-block: 0.55rem;
+}
+
+.embl-table tbody tr:last-child td,
+.table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.table-hover > tbody > tr {
+  transition: background-color var(--ml-ease);
+}
+
+.table-responsive,
+.table-scroll-panel {
+  border: 0;
+  border-radius: 0;
+}
+
+.table-scroll-panel .embl-table thead th {
+  background: var(--ml-gray-0);
+}
+
+/* Row actions read as quiet text commands until hovered. */
+.embl-table .btn-sm,
+.table .btn-sm {
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-color: var(--ml-brand);
+  --bs-btn-hover-bg: var(--ml-brand-soft);
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-hover-color: var(--ml-brand);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: transparent;
+  /* The selected row's disabled action; Bootstrap's white vanished here. */
+  --bs-btn-disabled-color: var(--ml-gray-7);
+  font-family: var(--ml-mono);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.45rem;
+  text-transform: lowercase;
+}
+
+/* Feature review uses a Dash DataTable; give it the same rules. */
+.dash-spreadsheet-container .dash-spreadsheet-inner th {
+  background: var(--ml-gray-0) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ml-gray-4) !important;
+  color: var(--ml-gray-5);
+  font-family: var(--ml-mono) !important;
+  font-weight: 500;
+}
+
+.dash-spreadsheet-container .dash-spreadsheet-inner td {
+  border: 0 !important;
+  border-bottom: 1px solid var(--ml-gray-2) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Status lines read as log output: a prompt glyph, monospace, no box. */
+
+.status-box {
+  background: var(--ml-gray-1);
+  border: 0;
+  border-left: 2px solid var(--ml-brand);
+  border-radius: 0 4px 4px 0;
+  color: var(--ml-gray-7);
+  font-family: var(--ml-mono);
+  font-size: 0.8125rem;
+  min-height: 0;
+  padding: 0.6rem 0.8rem;
+}
+
+.status-box:empty {
+  display: none;
+}
+
+.status-box::before {
+  color: var(--ml-brand);
+  content: "\203A\00a0";
+  font-weight: 600;
+}
+
+/* Small labels above values (eyebrows, context labels) follow the same rule:
+   monospace, since they name fields rather than say something. */
+
+.page-intro-eyebrow,
+.section-eyebrow,
+.sidebar-context-title,
+.page-context-label,
+.selection-reminder-label,
+.dashboard-metric-label {
+  font-family: var(--ml-mono);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Tabs: an underline under the active one instead of a folder tab or a
+   filled pill. Pill navs inside pages (the job sections) get the same look;
+   the sidebar keeps its own. */
+
+#page-content .nav-pills {
+  border-bottom: 1px solid var(--ml-gray-3);
+  gap: 0.25rem;
+}
+
+#page-content .nav-pills .nav-link {
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: var(--ml-gray-6);
+  margin-bottom: -1px;
+  padding: 0.5rem 0.9rem;
+  transition: color var(--ml-ease), border-color var(--ml-ease);
+}
+
+#page-content .nav-pills .nav-link:hover {
+  border-bottom-color: var(--ml-gray-4);
+  color: var(--ml-gray-9);
+}
+
+#page-content .nav-pills .nav-link.active {
+  background: transparent;
+  border-bottom-color: var(--ml-brand);
+  color: var(--ml-gray-9);
+  font-weight: 500;
+}
+
+#page-content .nav-pills .nav-link.disabled {
+  color: var(--ml-gray-4);
+}
+
+/* The job picker is a listing of run names and times: monospace. */
+
+.jw-job-link {
+  font-family: var(--ml-mono);
+  font-size: 0.8125rem;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid var(--ml-gray-3);
+  gap: 0.25rem;
+}
+
+.nav-tabs .nav-link {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: var(--ml-gray-6);
+  margin-bottom: -1px;
+  transition: color var(--ml-ease), border-color var(--ml-ease);
+}
+
+.nav-tabs .nav-link:hover {
+  border-bottom-color: var(--ml-gray-4);
+  color: var(--ml-gray-9);
+}
+
+.nav-tabs .nav-link.active {
+  background: transparent;
+  border-bottom-color: var(--ml-brand);
+  color: var(--ml-gray-9);
+}
+
+/* Signal colours. Red and orange text must stay readable at small sizes,
+   so every danger surface uses the deeper red, and alerts become tinted
+   panels with dark text and a coloured edge instead of white text on a
+   saturated fill. */
+
+.text-danger {
+  color: var(--ml-danger) !important;
+}
+
+.text-warning {
+  color: var(--ml-warning) !important;
+}
+
+.bg-danger {
+  background-color: var(--ml-danger) !important;
+}
+
+.nf-run-status-failed {
+  --nf-run-status-color: var(--ml-danger);
+}
+
+.btn-danger {
+  --bs-btn-bg: var(--ml-danger);
+  --bs-btn-border-color: var(--ml-danger);
+  --bs-btn-hover-bg: #912018;
+  --bs-btn-hover-border-color: #912018;
+  --bs-btn-active-bg: #912018;
+  --bs-btn-active-border-color: #912018;
+}
+
+.btn-outline-danger {
+  --bs-btn-color: var(--ml-danger);
+  --bs-btn-border-color: color-mix(in srgb, var(--ml-danger) 45%, transparent);
+  --bs-btn-hover-bg: var(--ml-danger);
+  --bs-btn-hover-border-color: var(--ml-danger);
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-active-bg: #912018;
+  --bs-btn-active-border-color: #912018;
+}
+
+.alert {
+  border: 0;
+  border-left: 3px solid var(--alert-edge, var(--ml-gray-5));
+  border-radius: 0 4px 4px 0;
+  color: var(--ml-gray-9);
+  font-size: 0.875rem;
+  padding: 0.65rem 0.9rem;
+}
+
+.alert-danger {
+  --alert-edge: var(--ml-danger);
+  background: var(--ml-danger-soft);
+  color: #7a1a12;
+}
+
+.alert-warning {
+  --alert-edge: #d68a1a;
+  background: var(--ml-warning-soft);
+  color: #6b3a07;
+}
+
+.alert-success {
+  --alert-edge: var(--ml-brand);
+  background: var(--ml-brand-soft);
+  color: #0b4a33;
+}
+
+.alert-info,
+.alert-primary,
+.alert-secondary,
+.alert-light {
+  --alert-edge: var(--ml-gray-5);
+  background: var(--ml-gray-1);
+  color: var(--ml-gray-8);
+}
+
+.alert .alert-link,
+.alert a {
+  color: inherit;
+  font-weight: 600;
+}
+
+.status-box.text-danger {
+  border-left-color: var(--ml-danger);
+}
+
+.status-box.text-danger::before {
+  color: var(--ml-danger);
+}
+
+/* Controls: outlined by default, filled only for the primary action. */
+
+.btn {
+  border-radius: var(--ml-radius);
+  font-weight: 500;
+  transition: background-color var(--ml-ease), border-color var(--ml-ease),
+    color var(--ml-ease), box-shadow var(--ml-ease);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--ml-brand);
+  --bs-btn-border-color: var(--ml-brand);
+  --bs-btn-hover-bg: var(--ml-brand-active);
+  --bs-btn-hover-border-color: var(--ml-brand-active);
+  --bs-btn-active-bg: var(--ml-brand-active);
+  --bs-btn-active-border-color: var(--ml-brand-active);
+}
+
+.btn-secondary {
+  --bs-btn-bg: var(--ml-gray-0);
+  --bs-btn-color: var(--ml-gray-7);
+  --bs-btn-border-color: var(--ml-gray-4);
+  --bs-btn-hover-bg: var(--ml-gray-2);
+  --bs-btn-hover-color: var(--ml-gray-9);
+  --bs-btn-hover-border-color: var(--ml-gray-4);
+  --bs-btn-active-bg: var(--ml-gray-3);
+  --bs-btn-active-color: var(--ml-gray-9);
+  --bs-btn-active-border-color: var(--ml-gray-4);
+  --bs-btn-disabled-bg: var(--ml-gray-1);
+  --bs-btn-disabled-color: var(--ml-gray-5);
+  --bs-btn-disabled-border-color: var(--ml-gray-3);
+}
+
+.btn-light {
+  --bs-btn-bg: var(--ml-gray-0);
+  --bs-btn-color: var(--ml-gray-7);
+  --bs-btn-border-color: var(--ml-gray-3);
+  --bs-btn-hover-bg: var(--ml-gray-2);
+  --bs-btn-hover-color: var(--ml-gray-9);
+  --bs-btn-hover-border-color: var(--ml-gray-4);
+  --bs-btn-active-bg: var(--ml-gray-3);
+  --bs-btn-active-border-color: var(--ml-gray-4);
+}
+
+.form-control,
+.form-select {
+  border-color: var(--ml-gray-3);
+  border-radius: var(--ml-radius);
+  transition: border-color var(--ml-ease), box-shadow var(--ml-ease);
+}
+
+.form-control:focus,
+.form-select:focus,
+.btn:focus-visible,
+.nav-link:focus-visible {
+  border-color: var(--ml-brand);
+  box-shadow: 0 0 0 3px rgba(0, 123, 83, 0.18);
+  outline: 0;
+}
+
+details > summary {
+  transition: color var(--ml-ease), background-color var(--ml-ease);
+}
+
+/* Responsiveness. The app waits on the server for every page and update, so
+   the aim is immediate acknowledgement: the new page fades in rather than
+   snapping, and a region waiting on its callback dims at once instead of
+   looking frozen. Dash sets data-dash-is-loading on components whose
+   properties are being updated. */
+
+#page-content > * {
+  animation: ml-enter 140ms ease-out;
+}
+
+@keyframes ml-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+#page-content [data-dash-is-loading="true"] {
+  opacity: 0.55;
+  transition: opacity 150ms ease-out 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #page-content > * {
+    animation: none;
+  }
+
+  #page-content [data-dash-is-loading="true"] {
+    transition: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .sidebar-column {
+    border-right: 0;
+    border-bottom: 1px solid var(--ml-gray-3);
+    position: static;
+  }
+
+  .main-content {
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .metabolens-facility-name {
+    display: none !important;
+  }
+}

@@ -1,0 +1,86 @@
+MS-DIAL ver. 5.5
+
+#Project
+MS1 Data type: Centroid
+MS2 Data type: Centroid
+Ion mode: Positive
+Target: Metablomics
+Mode: ddMSMS
+
+#Data collection parameters
+Retention time begin: 0.5
+Retention time end: 18
+MS1 mass range begin: 0
+MS1 mass range end: 900
+MS2 mass range begin: 0
+MS2 mass range end: 900
+
+#Centroid parameters
+MS1 tolerance for centroid: 0.01
+MS2 tolerance for centroid: 0.025
+
+#Isotope recognition
+Max charge number: 2
+
+#Data processing
+Number of threads: 4
+
+#Peak detection parameters
+Smoothing method: LinearWeightedMovingAverage
+Smoothing level: 3
+Minimum peak width: 5
+Minimum peak height: 1000
+
+#Peak spotting parameters
+Mass slice width: 0.1
+Exclusion mass list (mass & tolerance)
+
+#Deconvolution parameters
+Sigma window value: 0.5
+MSMS abundance cut off: 0
+Exclude after precursor ion: True
+Keep isotope until: 0.5
+Keep original precursor isotopes: False
+
+#MSP file and MS/MS identification setting
+MSP file path: MSMS-Pos-MassBank.msp
+RT tolerance for MSP-based annotation: 100
+MS1 tolerance for MSP-based annotation: 0.02
+MS2 tolerance for MSP-based annotation: 0.2
+Total score cutoff for MSP-based annotation: 0
+Use retention information for MSP-based annotation scoring: False
+Use retention information for MSP-based annotation filtering: False
+
+#Text DB file and post identification (retention time and accurate mass based) setting
+Text DB file path: ms1_lib.txt
+RT tolerance for text-based annotation: 0.5
+Accurate MS1 tolerance for text-based annotation: 0.02
+Total score cutoff for text-based annotation: 0
+
+#Advanced setting for identification
+Relative abundance cut off: 0
+Top candidate report: True
+
+#Adduct ion setting
+Searched adduct ions: [M+H]+,[M+NH4]+,[M+Na]+,[M+K]+,[M+CH3OH+H]+,[M+ACN+H]+,[M+ACN+Na]+,[M+H-H2O]+,[M+H-2H2O]+,[2M+H]+,[2M+Na]+,[M+2H]2+
+
+#Alignment parameters setting
+Alignment reference file ID: QE2_sbs_11_48_10Nddms2
+Retention time tolerance for alignment: 0.05
+MS1 tolerance for alignment: 0.015
+Retention time factor for alignment: 0.5
+MS1 factor for alignment: 0.5
+Peak count filter: 20
+N% detected in at least one group: 0
+Remove feature based on peak height fold-change: True
+Sample max / blank average: 5
+Sample average / blank average: 5
+Keep reference matched metabolites: True
+Keep suggested metabolites: True
+Force insert peaks in gap filling: True
+
+#Tracking of isotope labels
+Tracking isotope label: FALSE
+
+#Ion mobility
+Ion mobility data: FALSE
