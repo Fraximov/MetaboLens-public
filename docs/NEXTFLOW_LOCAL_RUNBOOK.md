@@ -1,37 +1,42 @@
 # Local scientific execution
 
 Follow the [project setup](../README.md) before launching work. Prepare scientific
-images with `python3 scripts/setup_scientific_images.py --build-metabolensr`
-for a fresh clone, then recreate the application services when no job is running.
-Without that flag, setup requires the unpublished MetaboLensR image pinned in
-both engine descriptors. Setup also builds the other scientific images. It
-writes an ignored setup record and pins new jobs to exact image identities.
+images with `python3 scripts/setup_scientific_images.py`, then recreate the
+application services when no job is running. Setup pulls the public MetaboLensR
+image pinned in both engine descriptors without a registry login and builds the
+other scientific images. It writes an ignored setup record and pins new jobs
+to exact image identities.
 
 ## Prebuilt MetaboLensR
 
-This source snapshot pins an unpublished local `linux/amd64` image. Its archive
-is not included in this repository, and there is no public registry address yet.
-If you have received the archive separately, follow these instructions.
-Check the archive's SHA-256 against its accompanying `SHA256SUMS` before loading
-it. From the archive directory:
+Both engines pin this public `linux/amd64` image containing MetaboLensR 0.0.0.9003:
+
+```text
+ghcr.io/fraximov/metabolensr@sha256:5608800abc630f5489e5b452741a8ac5e808508bcd0a0e46241a584a6ccc05ec
+```
+
+Setup pulls it only if unavailable locally, preserves the requested digest and
+verifies platform, source revision, installed package version and curation
+profiles before changing descriptors. Docker Desktop on Apple Silicon needs
+amd64 emulation. No registry credentials are needed for this image.
+
+Use `--metabolensr-image REGISTRY/REPOSITORY@sha256:DIGEST` to select another
+compatible image, replacing the example with its actual immutable reference.
+Mutable tags are rejected. Raw `sha256:` image IDs are local-only and are never
+pulled.
+
+If you have received the image archive separately, verify its SHA-256 against
+the accompanying `SHA256SUMS` before loading it. From the archive directory:
 
 ```bash
 shasum -a 256 -c SHA256SUMS
 docker load --input metabolensr-0.0.0.9003-linux-amd64.tar
 ```
 
-Then run setup from the source repository. It reuses the locally available image
-without rebuilding MetaboLensR. The accompanying image manifest records the
-archive checksum, package commit and image identity. Docker image-store formats
-can expose different local IDs; an explicit immutable image override is available
-with `--metabolensr-image`.
-
-When a verified registry image is available, select its full immutable reference
-with `--metabolensr-image REGISTRY/REPOSITORY@sha256:DIGEST`, replacing the example
-with the actual reference. Setup pulls it only if unavailable locally, preserves
-the requested digest and verifies platform, source revision, installed package
-version and curation profiles before changing descriptors. Mutable tags are
-rejected. Raw `sha256:` image IDs are local-only and are never pulled.
+The accompanying image manifest records the archive checksum, package commit
+and image identity. Docker image-store formats can expose different local IDs;
+use `--metabolensr-image` with the loaded image's full local `sha256:` ID when
+working offline.
 
 ## Explicit source-build fallback
 

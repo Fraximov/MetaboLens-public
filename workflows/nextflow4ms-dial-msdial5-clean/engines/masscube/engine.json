@@ -72,7 +72,7 @@
   "package": {
     "version": "0.0.0.9003",
     "commit": "d69ed62f68d76e4ffe61ed107190f6a16945e50b",
-    "container_image": "sha256:5608800abc630f5489e5b452741a8ac5e808508bcd0a0e46241a584a6ccc05ec",
+    "container_image": "ghcr.io/fraximov/metabolensr@sha256:5608800abc630f5489e5b452741a8ac5e808508bcd0a0e46241a584a6ccc05ec",
     "config": {
       "schema_version": "1.0",
       "profile": "strict",

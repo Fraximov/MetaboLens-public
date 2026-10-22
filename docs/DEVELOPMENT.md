@@ -38,7 +38,9 @@ docker run --rm --network none -v "$PWD:/app:ro" -e PYTHONPATH=/app/backend:/app
 ```
 
 CI runs these suites and applies all Alembic migrations against disposable
-PostgreSQL 16. Real scientific processing is a separate acceptance test requiring
+PostgreSQL 16. It also pulls the pinned MetaboLensR image without registry
+credentials and validates the package identity and both engine profile catalogs.
+Real scientific processing is a separate acceptance test requiring
 fresh scientific images and permitted input data; unit tests do not establish
 scientific accuracy. Optional acceptance tests report skips when tools/data are
 unavailable.

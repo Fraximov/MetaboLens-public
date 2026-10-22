@@ -29,20 +29,20 @@ not be redistributed as a source release.
 
 ## Prepare scientific execution
 
-Prepare scientific images before launching workflows. The prebuilt MetaboLensR
-image is currently unpublished, so a fresh clone must build the included source.
-Setup also builds the other scientific images from selected source inputs.
-Those builds download substantial dependencies and can take time:
-
-```bash
-python3 scripts/setup_scientific_images.py --build-metabolensr
-```
-
-If you have the separately supplied, verified image archive, load it first and
-use the pinned prebuilt MetaboLensR image instead:
+Prepare scientific images before launching workflows. Setup downloads the public
+MetaboLensR 0.0.0.9003 image for Linux amd64 by its pinned digest; no registry login
+or MetaboLensR build is required. Setup still builds the other scientific images
+from selected source inputs. Those builds download substantial dependencies and
+can take time:
 
 ```bash
 python3 scripts/setup_scientific_images.py
+```
+
+To build MetaboLensR from the included checksummed source instead:
+
+```bash
+python3 scripts/setup_scientific_images.py --build-metabolensr
 ```
 
 Setup verifies the MetaboLensR platform, source revision, version and profile

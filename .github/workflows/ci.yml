@@ -21,6 +21,29 @@ jobs:
       - run: python3 -m unittest discover -s tests -v
       - run: python3 scripts/check_context_docs.py
       - run: node frontend/tests/test_eic_search.js
+  prebuilt-metabolensr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - name: Pull and validate MetaboLensR without registry credentials
+        env:
+          DOCKER_CONFIG: ${{ runner.temp }}/metabolens-public-anonymous-docker
+        run: |
+          mkdir -p "$DOCKER_CONFIG"
+          printf '{}\n' > "$DOCKER_CONFIG/config.json"
+          python3 - <<'PY'
+          import json
+          from scripts.setup_scientific_images import ROOT, WORKFLOW, prepare_metabolensr
+
+          descriptors = [json.loads((WORKFLOW / "engines" / engine / "engine.json").read_text())
+                         for engine in ("msdial5", "masscube")]
+          record = prepare_metabolensr(descriptors, platform="linux/amd64",
+              package_source=ROOT / "third_party/MetaboLensR",
+              tag="metabolens-public-ci:unused", build=False)
+          assert record["mode"] == "prebuilt"
+          print("Anonymous pull and package/profile validation passed:", record["identity"])
+          PY
   services:
     runs-on: ubuntu-latest
     timeout-minutes: 40

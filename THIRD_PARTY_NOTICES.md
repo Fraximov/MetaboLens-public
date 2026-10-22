@@ -11,6 +11,9 @@ The MetaboLens application is distributed under the root MIT license.
   The application's MIT license does not override third-party terms.
 - The selected MetaboLensR source is MIT licensed; its license, copyright and
   source-file checksums are retained in `third_party/MetaboLensR/`.
+  The published MetaboLensR container also includes Debian, R, R packages and
+  Quarto under their respective licenses. Their included notices remain in the
+  image; the application's MIT license does not relicense the whole container.
 - MetaboLights resources retain their Apache-2.0 license and pinned bundle
   metadata in `backend/app/resources/metabolights/`.
 - Python, R, Rust, JavaScript and container dependencies retain their own

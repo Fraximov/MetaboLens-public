@@ -6,15 +6,15 @@ Use Nextflow 25.10.4 and Docker for local execution. See the [application runboo
 
 ## Prepare scientific images
 
-For a fresh clone, build the included MetaboLensR source from the repository root:
+From the repository root:
 
 ```sh
-python3 scripts/setup_scientific_images.py --build-metabolensr
+python3 scripts/setup_scientific_images.py
 ```
 
-The command builds MetaboLensR and the remaining clean `linux/amd64` images with unique `metabolens-public-*` tags, and pulls the pinned public ThermoRawFileParser image. It verifies the package revision, version, platform and catalog before updating descriptors and writes an ignored setup record under `runtime/image-setup/`. Only explicit source files enter temporary build contexts. Nothing is pushed to a registry. Manual launches must supply descriptor image identities; default scientific image names use a separate public-only `:unconfigured` placeholder and never select an existing private image.
+The command pulls the public MetaboLensR 0.0.0.9003 `linux/amd64` image by the digest pinned in both engine descriptors, without a registry login or package build. It still builds the remaining clean images with unique `metabolens-public-*` tags and pulls the pinned public ThermoRawFileParser image. It verifies the package revision, version, platform and catalog before updating descriptors and writes an ignored setup record under `runtime/image-setup/`. Only explicit source files enter temporary build contexts. Nothing is pushed to a registry. Manual launches must supply descriptor image identities; default scientific image names use a separate public-only `:unconfigured` placeholder and never select an existing private image.
 
-The prepared MetaboLensR image is unpublished. If you have received its archive separately, load it and omit `--build-metabolensr` to reuse the pin in both engine descriptors. The source-build option uses the checksummed source in `third_party/MetaboLensR`. `--metabolensr-image` accepts an explicit immutable image reference; mutable tags and silent source-build fallback are prohibited. Archive verification, registry selection and fallback instructions are in the [local runbook](../../docs/NEXTFLOW_LOCAL_RUNBOOK.md).
+Use `python3 scripts/setup_scientific_images.py --build-metabolensr` to build the checksummed source in `third_party/MetaboLensR` explicitly instead. `--metabolensr-image` accepts an explicit immutable image reference; mutable tags and silent source-build fallback are prohibited. The exact public registry pin, archive verification and fallback instructions are in the [local runbook](../../docs/NEXTFLOW_LOCAL_RUNBOOK.md).
 
 Requested prebuilt registry digests are retained exactly. For source builds, Docker's repository digest is recorded when available, otherwise its full local `sha256:<image ID>`. A local ID requires that image in the current Docker daemon; another host must load the archive or explicitly build from source. Existing queued/running jobs keep their original descriptors. Recreate application containers after setup, while no local job is running, so catalog seeding uses the updated descriptors. Later rebuilds can produce different identities because operating-system repositories are not frozen snapshots; setup records identify the exact result.
 
