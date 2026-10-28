@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-28
+
+- Corrected field map row MLISA-064 (batch identifier): batch is stored per injection, as its storage columns already said; the example still described per assay–sample storage.
+- Added the field map's column guide, `docs/METABOLIGHTS_LABID_FIELD_MAP.md`, and indexed it from `docs/README.md`.
+
 ## Initial public alpha
 
 - Prepared standalone source with MIT licensing and retained third-party notices.
