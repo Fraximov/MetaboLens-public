@@ -1,4 +1,4 @@
-"""The MetaboLights–LabID field map CSV is the only copy; its code references must stay real.
+"""The MetaboLens–MetaboLights field map CSV is the only copy; its code references must stay real.
 
 Each reference is ``path`` or ``path::Qualified.symbol``. A renamed or removed
 symbol fails here, so the map is corrected in the same change as the code.
@@ -12,7 +12,7 @@ import re
 import unittest
 
 ROOT = next((root for root in [*Path(__file__).resolve().parents, Path("/workspace")]
-             if (root / "docs/resources/metabolights-labid-field-map.csv").is_file()), None)
+             if (root / "docs/resources/metabolens-metabolights-field-map.csv").is_file()), None)
 COLUMNS = ["Map ID", "Field", "Minimum mapping readiness", "Typical example (illustrative)", "Scope",
            "Current MetaboLens storage", "Database source / JSON path", "ISA destination", "Current support",
            "Capture source", "MetaboLights submission requirement", "Ontology rule (general MetaboLights studies)",
@@ -39,7 +39,7 @@ def symbols(path: Path) -> set[str]:
 @unittest.skipIf(ROOT is None, "The repository docs folder is not mounted")
 class FieldMapTests(unittest.TestCase):
     def setUp(self):
-        with (ROOT / "docs/resources/metabolights-labid-field-map.csv").open(encoding="utf-8", newline="") as stream:
+        with (ROOT / "docs/resources/metabolens-metabolights-field-map.csv").open(encoding="utf-8", newline="") as stream:
             reader = csv.DictReader(stream)
             self.columns, self.rows = reader.fieldnames, list(reader)
 
