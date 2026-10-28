@@ -10,6 +10,7 @@
 - [Security and credentials](../SECURITY.md)
 - [Third-party notices](../THIRD_PARTY_NOTICES.md)
 - [MetaboLights/LabID field map](resources/metabolights-labid-field-map.csv)
+- [How to read the field map](METABOLIGHTS_LABID_FIELD_MAP.md)
 
 This public documentation describes the supported source distribution. Internal
 development ledgers, personal infrastructure notes and legacy design documents
