@@ -4,9 +4,10 @@
 
 - Corrected field map row MLISA-064 (batch identifier): batch is stored per injection, as its storage columns already said; the example still described per assay–sample storage.
 - Added the field map's column guide, `docs/METABOLIGHTS_LABID_FIELD_MAP.md`, and indexed it from `docs/README.md`.
-- Removed the field map's "LabID handoff action" column: guidance written before LabID's fields were known, mostly repeated stock sentences.
+- Removed the field map's "LabID handoff action" column.
 - Replaced the field map's "OLS / ontology lookup" prose with two columns generated from the pinned MetaboLights policy, "Ontology rule (general MetaboLights studies)" and "Ontology rule (MetabolomicsHub studies)". `scripts/update_field_map_ontology_rules.py` regenerates them and `test_field_map.py` checks them against the bundle.
 - Corrected the field map guide: studies in the "MS (MTBLS)" category are shared with MetabolomicsHub under its legacy profile, not kept outside it.
+- Renamed the field map to `docs/resources/metabolens-metabolights-field-map.csv` and its guide to `docs/METABOLENS_METABOLIGHTS_FIELD_MAP.md`.
 
 ## Initial public alpha
 

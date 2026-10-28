@@ -1,8 +1,8 @@
-# MetaboLens–LabID–MetaboLights field map
+# MetaboLens–MetaboLights field map
 
 **Status:** reference
 
-The field map lives in one file: [`metabolights-labid-field-map.csv`](resources/metabolights-labid-field-map.csv). It has 157 entries for the untargeted LC–MS packaging path. Each entry says where MetaboLens gets an ISA/MAF value, how complete that mapping is, where the value should come from, and which ontology terms MetaboLights accepts for it. This page only explains how to read and maintain it; it holds no entries, so there is nothing to keep in step.
+The field map lives in one file: [`metabolens-metabolights-field-map.csv`](resources/metabolens-metabolights-field-map.csv). It has 157 entries for the untargeted LC–MS packaging path. Each entry says where MetaboLens gets an ISA/MAF value, how complete that mapping is, where the value should come from, and which ontology terms MetaboLights accepts for it. This page only explains how to read and maintain it; it holds no entries, so there is nothing to keep in step.
 
 MetaboLights packaging is a prototype in this alpha (see the [README](../README.md)). The [pinned contract and policy versions](../backend/app/resources/metabolights/lock.json) define the audited baseline.
 
@@ -23,7 +23,7 @@ MetaboLights packaging is a prototype in this alpha (see the [README](../README.
 | Ontology rule (MetabolomicsHub studies) | The same for the policy's "MS (MetabolomicsHub)" category (`ms-mhd-enabled`), shared under MetabolomicsHub's MS profile, whose rules are stricter and mostly PSI-MS. "Same as general MetaboLights studies." when the rules match. Generated. |
 | Code evidence | `path` or `path::Qualified.symbol`, separated by semicolons. Symbols name a class, function, class attribute or module-level name, never a line number. |
 
-## What LabID should populate
+## Where imported metadata goes
 
 PI/contact, publication and design data are JSON entries in `studies.metadata_json`; protocols use `protocols` and `assay_protocol_links`. They are not inferred from login users. Samples and their stable assay-specific annotations remain separate from instrument measurements. Each injection has an `acquisitions` record linked to the study sample and assay; `dataset_files.acquisition_id` links its registered file. Batch, injection order, vial, acquired_at and injection volume belong to the acquisition. New jobs freeze effective samplesheet rows at launch; matrix identities remain `file-<DatasetFile.id>`.
 

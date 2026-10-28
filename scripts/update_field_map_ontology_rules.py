@@ -15,7 +15,7 @@ import re
 import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
-FIELD_MAP = ROOT / "docs/resources/metabolights-labid-field-map.csv"
+FIELD_MAP = ROOT / "docs/resources/metabolens-metabolights-field-map.csv"
 PINNED = ROOT / "backend/app/resources/metabolights"
 GENERAL = "Ontology rule (general MetaboLights studies)"
 HUB = "Ontology rule (MetabolomicsHub studies)"
