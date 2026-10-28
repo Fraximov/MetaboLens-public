@@ -2,9 +2,11 @@
 
 Each reference is ``path`` or ``path::Qualified.symbol``. A renamed or removed
 symbol fails here, so the map is corrected in the same change as the code.
+The two ontology-rule columns must match what the pinned policy accepts.
 """
 import ast
 import csv
+import importlib.util
 from pathlib import Path
 import re
 import unittest
@@ -13,8 +15,8 @@ ROOT = next((root for root in [*Path(__file__).resolve().parents, Path("/workspa
              if (root / "docs/resources/metabolights-labid-field-map.csv").is_file()), None)
 COLUMNS = ["Map ID", "Field", "Minimum mapping readiness", "Typical example (illustrative)", "Scope",
            "Current MetaboLens storage", "Database source / JSON path", "ISA destination", "Current support",
-           "Capture source", "LabID handoff action", "MetaboLights submission requirement", "OLS / ontology lookup",
-           "Code evidence"]
+           "Capture source", "MetaboLights submission requirement", "Ontology rule (general MetaboLights studies)",
+           "Ontology rule (MetabolomicsHub studies)", "Code evidence"]
 
 
 def symbols(path: Path) -> set[str]:
@@ -62,6 +64,15 @@ class FieldMapTests(unittest.TestCase):
                     if symbol not in cache[path]:
                         broken.append(f"{row['Map ID']}: {path} has no {symbol}")
         self.assertEqual(broken, [])
+
+    def test_ontology_rules_match_the_pinned_policy(self):
+        spec = importlib.util.spec_from_file_location("ontology_rules", ROOT / "scripts/update_field_map_ontology_rules.py")
+        rules = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(rules)
+        controls, template_version = rules.load_policy(ROOT / "backend/app/resources/metabolights")
+        stale = [row["Map ID"] for row in self.rows
+                 if rules.ontology_rule_cells(row, controls, template_version) != (row[rules.GENERAL], row[rules.HUB])]
+        self.assertEqual(stale, [], "run python3 scripts/update_field_map_ontology_rules.py")
 
 
 if __name__ == "__main__":
